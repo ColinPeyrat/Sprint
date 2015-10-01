@@ -2,7 +2,7 @@
 
 class T_J_LIGNECOMMANDE_LEC extends Model
 {
-    protected $_com_id;
-    protected $_t_e_jeuvideo_jeu;
+    protected $_T_E_COMMANDE_COM;
+    protected $_T_E_JEUVIDEO_JEU;
     protected $_lec_quantite;
 }

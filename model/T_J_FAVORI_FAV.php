@@ -2,6 +2,6 @@
 
 class T_J_FAVORI_FAV extends Model
 {
-    protected $_t_e_client_cli;
-    protected $_t_e_jeuvideo_jeu;
+    protected $_T_E_CLIENT_CLI;
+    protected $_T_E_JEUVIDEO_JEU;
 }

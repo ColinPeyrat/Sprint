@@ -2,6 +2,6 @@
 
 class T_J_ALERTE_ALE extends Model
 {
-    protected $_cli_id;
-    protected $_t_e_jeuvideo_jeu;
+    protected $_T_E_CLIENT_CLI;
+    protected $_T_E_JEUVIDEO_JEU;
 }

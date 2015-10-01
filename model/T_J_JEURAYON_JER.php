@@ -2,6 +2,6 @@
 
 class T_J_JEURAYON_JER extends Model
 {
-    protected $_t_e_jeuvideo_jeu;
-    protected $_t_r_rayon_ray;
+    protected $_T_E_JEUVIDEO_JEU;
+    protected $_T_R_RAYON_RAY;
 }

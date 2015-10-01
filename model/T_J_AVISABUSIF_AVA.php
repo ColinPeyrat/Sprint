@@ -2,6 +2,6 @@
 
 class T_J_AVISABUSIF_AVA extends Model
 {
-    protected $_t_e_client_cli;
-    protected $_t_e_avis_avi;
+    protected $_T_E_CLIENT_CLI;
+    protected $_T_E_AVIS_AVI;
 }
