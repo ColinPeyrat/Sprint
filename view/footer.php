@@ -1,11 +1,5 @@
 
-</section>
 
-<footer>
-Copyleft 2015
-</footer>
-
-</main>
-
+</div>
 </body>
 </html>

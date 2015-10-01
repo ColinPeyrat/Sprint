@@ -48,12 +48,29 @@ $tables = [
 
 // Gestion des la route : paramètre r = controller/action
 if (isset(parameters()["r"])) {
-	
-	$route = strtolower($tables[parameters()["r"]]);
+
+
+	if(strlen(parameters()["r"]) > 3  ) {
+
+		//TRANSFORME LE cli/login en T_E_CLIENT_CLI/login
+		list($route, $osef) = $route = explode("/", parameters()["r"]);
+
+		//recupere le vrai nombre de la table
+		$route = $tables[$route];
+
+		//remet le bon nom du controller
+		$route = strtolower($route);
+		$route = $route."/".$osef;
+	} else {
+		//ne marche que si on a rien apres le / par exemple ?r=jeu (si on a ?r=jeu/add ca foire)
+		$route = strtolower($tables[parameters()["r"]]);
+	}
+
 	if (strpos($route,"/") === FALSE)
 		list($controller, $action) = array($route, "index");
-	else
+	else {
 		list($controller, $action) = explode("/", $route);
+	}
 
 	$controller = ucfirst($controller)."Controller";
 	$c = new $controller();

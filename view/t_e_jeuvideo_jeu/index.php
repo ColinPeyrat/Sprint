@@ -1,4 +1,5 @@
-<table>
+<h2>Les jeux</h2>
+<table class="table table-condensed">
 <?php
 foreach($data as $jeu){
     echo "<tr>";
