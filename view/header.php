@@ -12,8 +12,7 @@
 	</header>
 	<nav>
 		<ul>
-			<li><a href="?r=beer">Les bières</a></li>
-			<li><a href="?r=brewery">Les brasseries</a></li>
+			<li><a href=""></a></li>
 		</ul>
 	</nav>
 	<section>	
