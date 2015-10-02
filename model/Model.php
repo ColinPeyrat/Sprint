@@ -15,7 +15,7 @@ class Model {
 			$st = db()->prepare("insert into $table default values returning $idtable");
 			$st->execute();
 			$row = $st->fetch();
-			$field = "id".$table;
+			$field = $idtable;
 			$this->$field = $row[$field];
 		} else {
 			$st = db()->prepare("select * from $table where $idtable=:id");
@@ -97,7 +97,7 @@ class Model {
 				$class = get_class($this);
 				$table = strtolower($class);
                 $idtable = substr($table,-3)."_id";
-				$id = "_id".$fieldName;
+				$id = $idtable;
 				if (isset($value->$id)) {
 					$st = db()->prepare("update $table set id$fieldName=:val where $idtable=:id");
 					$id = substr($id, 1);
@@ -105,6 +105,7 @@ class Model {
 				} else {
 					$st = db()->prepare("update $table set $fieldName=:val where $idtable=:id");
 					$st->bindValue(":val", $value);
+
 				}
 				$id = $idtable;
 				$st->bindValue(":id", $this->$id);

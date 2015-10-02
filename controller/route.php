@@ -13,6 +13,9 @@ if (isset($_POST))
 if (isset($_GET))
 	foreach($_GET as $k=>$v)
 		$parameters[$k] = $v;
+if (isset($_FILES))
+	foreach($_FILES as $k=>$v)
+		$parameters[$k] = $v;
 
 // Pour accès ultérieur sans "global"
 function parameters() {
@@ -43,7 +46,8 @@ $tables = [
 	'edi' => 'T_R_EDITEUR_EDI',
 	'gen' => 'T_R_GENRE_GEN',
 	'pay' => 'T_R_PAYS_PAY',
-	'ray' => 'T_R_RAYON_RAY'
+	'ray' => 'T_R_RAYON_RAY',
+	'srv' => 'SERVICE_VENTE'
 ];
 
 // Gestion des la route : paramètre r = controller/action

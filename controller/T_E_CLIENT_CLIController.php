@@ -9,16 +9,17 @@ class T_E_CLIENT_CLIController extends Controller
         else {
             if (isset(parameters()["action"]) &&  parameters()["action"] == "Se Connecter") {
                 $c = new T_E_CLIENT_CLI();
-                $c->__set("cli_pseudo", parameters()["login"]);
+                $c->__set("cli_mel", parameters()["login"]);
                 $c->__set("cli_motpasse", parameters()["password"]);
-                $c->userExistInDb();
-                if ($c->connected) {
-                    $_SESSION['user'] = $c;
-                    $this->render("index");
-                } else {
+                $c = $c->userExistInDb();
+
+                if ($c == null) {
                     $messages = new message();
                     $messages->setFlash("Pseudo ou mot de passe inconnu");
                     $this->render("login");
+                } else {
+                    $_SESSION['user'] = $c;
+                    $this->render("index");
                 }
 
             } else {
@@ -37,8 +38,32 @@ class T_E_CLIENT_CLIController extends Controller
             $c ->index();
         }
         $m = new message();
-        $m->setFlash("Deconnexion r�ussie","success");
+        $m->setFlash("Deconnexion réussie","success");
 
 
+    }
+    public function modify(){
+        if(isset(parameters()["action"]) && parameters()["action"] == "Modifier son compte"){
+            $this->render("modify");
+        }
+        if(isset(parameters()["action"]) && parameters()["action"] == "Modifier") {
+            $mail = parameters()["mel"];
+            $mdp = parameters()["motpasse"];
+            $pseudo = parameters()["pseudo"];
+            $civilite = parameters()["civilite"];
+            $nom = strtoupper(parameters()["nom"]);
+            $prenom = parameters()["prenom"];
+            $tfixe = parameters()["telfixe"];
+            $tport = parameters()["telportable"];
+
+            $m = new message();
+
+            $c = new T_E_CLIENT_CLI();
+            $c = $_SESSION['user'];
+            $c->modifyInfo($mail,$mdp,$pseudo,$civilite,$nom,$prenom,$tfixe,$tport);
+            $m->setFlash("Votre compte a bien été modifier","success");
+            $this->render("index");
+
+        }
     }
 }
