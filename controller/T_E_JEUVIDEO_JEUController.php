@@ -7,7 +7,7 @@ class T_E_JEUVIDEO_JEUController extends Controller
 			if($_POST['searchbtn'] == 'search'){
 				if($_POST['typesearch'] != 'tous'){
 					$a = new T_J_JEURAYON_JER();
-					$games = $a->findGameByRay($_POST['typesearch']);
+					$games = $a->findGameByRay($_POST['typesearch'], $_POST['searchinput']);
 					$this->render("index", [T_E_JEUVIDEO_JEU::findAll(), T_R_RAYON_RAY::findall(), $games]);
 				}
 			}
