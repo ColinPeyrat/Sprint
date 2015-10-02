@@ -19,7 +19,7 @@ class T_E_CLIENT_CLI extends Model
         $datas = array($mail,$mdp,$mdpconfirm,$pseudo,$civilite,$nom,$prenom,$tfixe);
         foreach ($datas as $data) {
             if(empty($data)){
-                 $m->setFlash("Tous les gens sont obligatoires");
+                 $m->setFlash("Tous les champs sont obligatoires");
                  $error = true;
             }
         }
@@ -36,7 +36,7 @@ class T_E_CLIENT_CLI extends Model
             $m->setFlash("Veuillez saisir un numéro de téléphone fixe valide");
             $error = true;
          }
-         if(isset($tport)){
+         if(isset($tport) && !empty($tport)){
              if (!preg_match("#06\d{7,9}#", $tport)){
                 $m->setFlash("Veuillez saisir un numéro de téléphone portable valide");
                 $error = true;
