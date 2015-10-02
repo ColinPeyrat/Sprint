@@ -29,7 +29,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jeux <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="?r=jeu">Voir tous les jeux</a></li>
-                            <li><a href="#">Ce bouton sert à rien</a></li>
+                            <li><a href="?r=jeu/findBySelection">Chercher un jeu</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Lui non plus</li>
                             <li><a href="#">Toujours pas</a></li>
@@ -42,6 +42,6 @@
             </div><!--/.nav-collapse -->
     </nav>
     <?php
-    $messages = new message();
-    $messages->flash();
+        $messages = new message();
+        $messages->flash();
     ?>
