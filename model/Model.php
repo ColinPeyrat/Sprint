@@ -7,15 +7,15 @@
 class Model {
 
 	// Un appel au constructeur sans id créées une instance et une ligne dans la db
-	public function __construct($id=null) {
+	public function __construct($id=null,$array=null) {
 		$class = get_class($this);
 		$table = strtolower($class);
         $idtable = substr($table,-3)."_id";
-		if ($id == null) {
+		if ($id == null && $array != null) {
 			$st = db()->prepare("insert into $table default values returning $idtable");
 			$st->execute();
 			$row = $st->fetch();
-			$field = "id".$table;
+			$field = $idtable;
 			$this->$field = $row[$field];
 		} else {
 			$st = db()->prepare("select * from $table where $idtable=:id");
