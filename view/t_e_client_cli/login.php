@@ -4,7 +4,7 @@
 
 
     <p>
-        <label for="login">login</label>
+        <label for="login">E-mail</label>
         <input type="text" name="login" id="login" />
     </p>
     <p>
