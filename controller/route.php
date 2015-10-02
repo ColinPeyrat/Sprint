@@ -57,9 +57,8 @@ if (isset(parameters()["r"])) {
 
 		//recupere le vrai nombre de la table
 		$route = $tables[$route];
-
 		//remet le bon nom du controller
-		$route = strtolower($route);
+
 		$route = $route."/".$osef;
 	} else {
 		//ne marche que si on a rien apres le / par exemple ?r=jeu (si on a ?r=jeu/add ca foire)
@@ -72,7 +71,7 @@ if (isset(parameters()["r"])) {
 		list($controller, $action) = explode("/", $route);
 	}
 
-	$controller = ucfirst($controller)."Controller";
+	$controller = strtoupper($controller)."Controller";
 	$c = new $controller();
 	$c->$action();	
 

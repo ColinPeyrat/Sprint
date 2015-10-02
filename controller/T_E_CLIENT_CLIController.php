@@ -32,7 +32,9 @@ class T_E_CLIENT_CLIController extends Controller
     }
     public function unlog(){
         if(session_destroy()) {
-            header("Refresh:0; url=/sprint");
+            header("Refresh:0; url=../sprint/");
+            $c = new SiteController();
+            $c ->index();
         }
         $m = new message();
         $m->setFlash("Deconnexion réussie","success");
