@@ -20,7 +20,6 @@
 </form>
 
 <?php
-		var_dump($data);
 if(isset($data[2])){
 	foreach($data[2] as $jeu){
 
