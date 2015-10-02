@@ -13,7 +13,51 @@ class T_E_CLIENT_CLI extends Model
     protected $_cli_telportable;
     protected $_connected;
 
+    public function verifUserData($mail,$mdp,$mdpconfirm,$pseudo,$civilite,$nom,$prenom,$tfixe,$tport){
+    $m = new message();
+        $error = false;
+        $datas = array($mail,$mdp,$mdpconfirm,$pseudo,$civilite,$nom,$prenom,$tfixe);
+        foreach ($datas as $data) {
+            if(empty($data)){
+                 $m->setFlash("Tous les gens sont obligatoires");
+                 $error = true;
+            }
+        }
+        if(!($mdp == $mdpconfirm)){
+            $m->setFlash("Les mots de passes doivent etre identiques");
+            $error = true;
+        }
+        if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+             $m->setFlash("Veuillez saisir un E-Mail valide");
+                         $error = true;
 
+        }
+         if (!preg_match("#04\d{7,9}#", $tfixe)){
+            $m->setFlash("Veuillez saisir un numéro de téléphone fixe valide");
+            $error = true;
+         }
+         if(isset($tport)){
+             if (!preg_match("#06\d{7,9}#", $tport)){
+                $m->setFlash("Veuillez saisir un numéro de téléphone portable valide");
+                $error = true;
+             }
+         }
+        return $error;
+    }
+
+    public function insertNewUser(){
+        $req = db()->prepare("INSERT INTO t_e_client_cli (cli_mel, cli_motpasse, cli_pseudo, cli_civilite, cli_nom,cli_prenom,cli_telfixe,cli_telportable) VALUES (:mel, :motpase, :pseudo, :civilite,:nom,:prenom,:telfixe,:telport)");
+        $req->execute(array(
+            "mel" => $this->_cli_mel,
+            "motpase" => $this->_cli_motpasse,
+            "pseudo" => $this->_cli_pseudo,
+            "civilite" => $this->_cli_civilite,
+            "nom" => $this->_cli_nom,
+            "prenom" => $this->_cli_prenom,
+            "telfixe" => $this->_cli_telfixe,
+            "telport" => $this->_cli_telportable,
+            ));
+    }
     public function userExistInDb()
     {
         $st = db()->prepare("select * from t_e_client_cli where cli_mel=:mel AND cli_motpasse=:password");
@@ -68,9 +112,21 @@ class T_E_CLIENT_CLI extends Model
         $this->__set("cli_prenom",$prenom);
         $this->__set("cli_telfixe",$tfixe);
         $this->__set("cli_telportable",$tport);
-
-
     }
+
+    public function checkIfUserDontExist($mail,$pseudo){
+        $clients = $this::findAll();
+        $dontExist = true;
+        foreach($clients as $client){
+            if($client->cli_mel == $mail || $client->cli_pseudo == $pseudo)
+                $dontExist = false;
+        }
+
+        return $dontExist;
+    }
+
+
+
     public function displayModifyInfo() {
         ?>
         <form method="post" action="?r=cli/modify">
