@@ -76,8 +76,25 @@ if (isset(parameters()["r"])) {
 	}
 
 	$controller = strtoupper($controller)."Controller";
+	$m = new message();
+
+
+	//Autorise la partis de gestion des ventes seuelement au utilisateur ayant le role Service vente
+	if($controller == "SERVICE_VENTEController")
+	{
+		if(!isset($_SESSION['user'])) {
+			$c = new T_E_CLIENT_CLIController();
+			$m->setFlash("Veuillez d'abord vous connecter");
+			$controller = "T_E_CLIENT_CLIController";
+			$action = "login";
+		} else if($_SESSION['user']->role != "Service vente"){
+			$m->setFlash("Espace du site reservé au service vente.");
+			$controller = "SiteController";
+			$action = "index";
+		}
+	}
 	$c = new $controller();
-	$c->$action();	
+	$c->$action();
 
 } else {
 

@@ -9,7 +9,7 @@ class T_E_CLIENT_CLIController extends Controller
         else {
             if (isset(parameters()["action"]) &&  parameters()["action"] == "Se Connecter") {
                 $c = new T_E_CLIENT_CLI();
-                $c->__set("cli_mel", parameters()["login"]);
+                $c->__set("cli_mel", trim(parameters()["login"]));
                 $c->__set("cli_motpasse", parameters()["password"]);
                 $c = $c->userExistInDb();
 
@@ -43,11 +43,16 @@ class T_E_CLIENT_CLIController extends Controller
 
     }
     public function modify(){
+        if(!isset($_SESSION['user'])){
+            $m = new message();
+            $m->setFlash("Veuillez d'abord vous connecter");
+            $this->render("login");
+        }
         if(isset(parameters()["action"]) && parameters()["action"] == "Modifier son compte"){
             $this->render("modify");
         }
         if(isset(parameters()["action"]) && parameters()["action"] == "Modifier") {
-            $mail = parameters()["mel"];
+            $mail = trim(parameters()["mel"]);
             $mdp = parameters()["motpasse"];
             $pseudo = parameters()["pseudo"];
             $civilite = parameters()["civilite"];
@@ -60,9 +65,14 @@ class T_E_CLIENT_CLIController extends Controller
 
             $c = new T_E_CLIENT_CLI();
             $c = $_SESSION['user'];
-            $c->modifyInfo($mail,$mdp,$pseudo,$civilite,$nom,$prenom,$tfixe,$tport);
-            $m->setFlash("Votre compte a bien été modifié","success");
-            $this->render("index");
+            if(!($c->verifUserData($mail,$mdp,$mdp,$pseudo,$civilite,$nom,$prenom,$tfixe,$tport)))
+            {
+                $c->modifyInfo($mail,$mdp,$pseudo,$civilite,$nom,$prenom,$tfixe,$tport);
+                $m->setFlash("Votre compte a bien été modifié","success");
+                $this->render("index");
+            } else {
+                $this->render("modify");
+            }
 
         }
     }
@@ -71,7 +81,7 @@ class T_E_CLIENT_CLIController extends Controller
         if(isset($_SESSION['user'])) {
             $this->render("index");
         } elseif(isset(parameters()["action"]) && parameters()["action"] == "S'inscrire"){
-            $mail = parameters()["mel"];
+            $mail = trim(parameters()["mel"]);
             $mdp = parameters()["motpasse"];
             $mdpConf = parameters()["motpasseConfirm"];
             $pseudo = parameters()["pseudo"];
@@ -100,8 +110,9 @@ class T_E_CLIENT_CLIController extends Controller
                     $client->insertNewUser();
                      $m->setFlash($client->cli_prenom.", votre compte a bien été crée","success");
                     $this->render("login");
-                }
+                } else {
                     $this->render("register");
+                }
             }
 
         } else {

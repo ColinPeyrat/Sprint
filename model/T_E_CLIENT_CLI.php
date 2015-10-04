@@ -11,18 +11,14 @@ class T_E_CLIENT_CLI extends Model
     protected $_cli_prenom;
     protected $_cli_telfixe;
     protected $_cli_telportable;
+    protected $_role;
     protected $_connected;
 
     public function verifUserData($mail,$mdp,$mdpconfirm,$pseudo,$civilite,$nom,$prenom,$tfixe,$tport){
-    $m = new message();
+
+        $m = new message();
         $error = false;
-        $datas = array($mail,$mdp,$mdpconfirm,$pseudo,$civilite,$nom,$prenom,$tfixe);
-        foreach ($datas as $data) {
-            if(empty($data)){
-                 $m->setFlash("Tous les champs sont obligatoires");
-                 $error = true;
-            }
-        }
+        $datas = array($mail,$mdp,$mdpconfirm,$pseudo,$civilite,$nom,$prenom);
         if(!($mdp == $mdpconfirm)){
             $m->setFlash("Les mots de passes doivent etre identiques");
             $error = true;
@@ -32,9 +28,11 @@ class T_E_CLIENT_CLI extends Model
                          $error = true;
 
         }
-         if (!preg_match("#04\d{7,9}#", $tfixe)){
-            $m->setFlash("Veuillez saisir un numéro de téléphone fixe valide");
-            $error = true;
+        if(isset($tfixe) && !empty($tfixe)){
+             if (!preg_match("#04\d{7,9}#", $tfixe)){
+                $m->setFlash("Veuillez saisir un numéro de téléphone fixe valide");
+                $error = true;
+             }
          }
          if(isset($tport) && !empty($tport)){
              if (!preg_match("#06\d{7,9}#", $tport)){
@@ -42,6 +40,17 @@ class T_E_CLIENT_CLI extends Model
                 $error = true;
              }
          }
+         if(empty($tport) && empty($tfixe)){
+             $m->setFlash("Vous devez saisir obligatoirement au moins un numéro de téléphone");
+             $error = true;
+         }
+        foreach ($datas as $data) {
+            if(empty($data)){
+                 $m->setFlash("Tous les champs sont obligatoires");
+                 $error = true;
+            }
+        }
+
         return $error;
     }
 
@@ -71,6 +80,9 @@ class T_E_CLIENT_CLI extends Model
                 $st->execute();
                 $f = $st->fetch();
                 $client =  new T_E_CLIENT_CLI($f["cli_id"]);
+                if($f["cli_id"] == 1){
+                    $client->_role="Service vente";
+                }
                 $client->_connected = true;
             return $client;
         } else
@@ -80,7 +92,9 @@ class T_E_CLIENT_CLI extends Model
     public function displayInfo() {
         $info = array("Mail","Mot de passe","Pseudo","Civilité","Nom","Prenom","Téléphone Fixe","Téléphone Portable");
         $i = 0;
-
+        if(isset($this->_role)){
+            $info[] = "<strong>Votre role</strong>";
+        }
         $value = array();
         foreach($this as $key) {
             $value[] = $key;
@@ -92,7 +106,7 @@ class T_E_CLIENT_CLI extends Model
             echo "<td>".$inf."</td>";
             echo "<td>".$value[$i + 1];
             if($value[$i + 1] == null)
-                echo "Inconnu";
+                echo "";
             $i++;
             echo "</td>";
 
@@ -129,7 +143,7 @@ class T_E_CLIENT_CLI extends Model
 
     public function displayModifyInfo() {
         ?>
-        <form method="post" action="?r=cli/modify">
+        <form method="post" action="?r=cli/modify" role="form">
         <?php
         $info = array("Mail","Mot de passe","Pseudo","Civilité","Nom","Prenom","Téléphone Fixe","Téléphone Portable");
         $i = 0;
@@ -142,27 +156,25 @@ class T_E_CLIENT_CLI extends Model
         foreach ($info as $inf) {
 
             if($valu[$i + 1] == null)
-                $valuetext = "Inconnu";
+                $valuetext = "";
             else
                 $valuetext = $valu[$i + 1];
+            echo "<div class='form-group'>";
             echo "<label>$inf</label>";
             if($name[$i + 1] =="civilite") {
                 ?>
                 <select class="form-control" name="civilite">
-                <option value="M.">M.</option>
-                <option value="Mme">Mme</option>
-                <option value="Mlle">Mlle</option>
+                <option <?php if ($_SESSION['user']->cli_civilite == 'M.') { ?>selected="true" <?php }; ?> value="M.">M.</option>
+                <option <?php if ($_SESSION['user']->cli_civilite == 'Mme') { ?>selected="true" <?php }; ?>value="Mme">Mme</option>
+                <option <?php if ($_SESSION['user']->cli_civilite == 'Mlle') { ?>selected="true" <?php }; ?>value="Mlle">Mlle</option>
                 </select>
                 <?php
             } else
 
-            echo "<input type=\"text\" name=\"".$name[$i + 1]."\" value=\"$valuetext\"><br>";
-//            echo "<td>".$inf."</td>";
-//            echo "<td>".$value[$i + 1];
-//            if($value[$i + 1] == null)
-//                echo "Inconnu";
-            $i++;
-//            echo "</td>";
+            echo "<input class='form-control' type=\"text\" name=\"".$name[$i + 1]."\" value=\"$valuetext\"><br>";
+            echo "</div>";
+             $i++;
+
 
 
         }

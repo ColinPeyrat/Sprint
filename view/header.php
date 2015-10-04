@@ -24,15 +24,11 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Accueil</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jeux <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="?r=jeu">Voir tous les jeux</a></li>
                             <li><a href="?r=jeu/findBySelection">Chercher un jeu</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Lui non plus</li>
-                            <li><a href="#">Toujours pas</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -41,6 +37,9 @@
                     <?php
                     if(!isset($_SESSION['user'])){
                         echo "<li><a href='?r=cli/register'>S'inscrire</a></li>";
+                    }
+                    if(isset($_SESSION['user']) && $_SESSION['user']->role == "Service vente"){
+                        echo "<li><a href='?r=srv'>Espace service vente</a></li>";
                     }
 
                     ?>
