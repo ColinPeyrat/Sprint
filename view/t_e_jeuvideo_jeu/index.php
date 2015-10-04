@@ -23,10 +23,12 @@
 if(isset($data[2])){
 	foreach($data[2] as $jeu){
 
-	    echo "<tr>";
+		echo "<tr>";
 	    echo "<td>".$jeu->jeu_nom."</td>";
 	    echo "<td>".$jeu->jeu_prixttc."€</td>";
 	    echo "<td>".$jeu->T_R_EDITEUR_EDI->edi_nom."</td>";
+	  	echo "<td>".$jeu->T_R_CONSOLE_CON->con_nom."</td>";
+	  	echo "<td><a href='?r=avi/findByGame&id_game=".$jeu->jeu_id."'> Avis </a></td>";
 	    echo "</tr>";
 
 	}
@@ -34,10 +36,12 @@ if(isset($data[2])){
 
 else{
 	foreach($data[0] as $jeu){
-	    echo "<tr>";
+		echo "<tr>";
 	    echo "<td>".$jeu->jeu_nom."</td>";
 	    echo "<td>".$jeu->jeu_prixttc."€</td>";
 	    echo "<td>".$jeu->T_R_EDITEUR_EDI->edi_nom."</td>";
+	  	echo "<td>".$jeu->T_R_CONSOLE_CON->con_nom."</td>";
+	  	echo "<td><a href='?r=avi/findByGame&id_game=".$jeu->jeu_id."'> Avis </a></td>";
 	    echo "</tr>";
 	}
 }
