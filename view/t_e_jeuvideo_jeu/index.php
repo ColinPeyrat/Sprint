@@ -25,6 +25,7 @@ if(isset($data[2])){
 
 	    echo "<tr>";
 	    echo "<td>".$jeu->jeu_nom."</td>";
+	    echo "<td>".$jeu->jeu_prixttc."€</td>";
 	    echo "<td>".$jeu->T_R_EDITEUR_EDI->edi_nom."</td>";
 	    echo "</tr>";
 
@@ -35,6 +36,7 @@ else{
 	foreach($data[0] as $jeu){
 	    echo "<tr>";
 	    echo "<td>".$jeu->jeu_nom."</td>";
+	    echo "<td>".$jeu->jeu_prixttc."€</td>";
 	    echo "<td>".$jeu->T_R_EDITEUR_EDI->edi_nom."</td>";
 	    echo "</tr>";
 	}
