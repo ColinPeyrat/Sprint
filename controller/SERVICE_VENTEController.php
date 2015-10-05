@@ -7,6 +7,31 @@ class SERVICE_VENTEController extends Controller
 		$this->render("index");
 	}
 
+	public function gallery(){
+        $j = T_E_JEUVIDEO_JEU::findAll();
+        $p = T_E_PHOTO_PHO::findAll();
+        $m = T_E_VIDEO_VID::findAll();
+
+        $listj = array();
+        foreach($j as $k => $v){
+            unset($list);
+            $list['nom'] = $v->jeu_nom;
+            foreach($p as $x => $y){
+                if($y->T_E_JEUVIDEO_JEU->jeu_id == $v->jeu_id){
+                    $list['pho_url'][] = $y->pho_url;
+                }
+            }
+            foreach($m as $x => $y){
+                if($y->T_E_JEUVIDEO_JEU->jeu_id == $v->jeu_id){
+                    $list['vid_url'][] = $y->pho_url;
+                }
+            }
+            array_push($listj,$list);
+        }
+
+        $this->render("gallery",$listj);
+    }
+
 	public function addphoto(){
 		if (isset(parameters()["input"]['name'])) {
 			define('TARGET', './input/');

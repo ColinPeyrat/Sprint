@@ -4,6 +4,7 @@
     <ul class="nav nav-pills nav-stacked">
     <li role="presentation"><a href="./?r=srv/addphoto">Ajouter une photo</a></li>
     <li role="presentation"><a href="./?r=srv/addvideo">Ajouter une video</a></li>
+    <li role="presentation"><a href="./?r=srv/gallery">Voir la galerie</a></li>
   </ul>
   </div>
   <div class="col-md-9">
