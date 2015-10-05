@@ -5,6 +5,7 @@
 	<title>Sprint Fnac - jeu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/css/style.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
@@ -28,7 +29,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jeux <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="?r=jeu">Voir tous les jeux</a></li>
-                            <li><a href="?r=jeu/findBySelection">Chercher un jeu</a></li>
+                            <li class="dropdown-submenu">
+                                <a href="?r=jeu/findBySelection" class="dropdown-toggle" data-toggle="dropdown">Chercher un jeu</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="?r=jeu/findBySelection">Par console</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>

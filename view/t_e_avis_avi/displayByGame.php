@@ -20,7 +20,7 @@ else{
 			$star .= $stars[$i];
 		}
 		echo "<div class='panel panel-default'>";
-	    	echo "<div class='panel-heading'><strong>".$avi->avi_titre."</strong> : ".$star." - <span class='text-capitalize'>".$avi->T_E_CLIENT_CLI->cli_pseudo."</span> <small>(".$avi->avi_date.")</small></div>";
+	    	echo "<div class='panel-heading'><strong>".$avi->avi_titre."</strong> : ".$star." - <span class='text-capitalize'><a href='?r=cli/viewOne&id_cli=".$avi->T_E_CLIENT_CLI->cli_id."'>".$avi->T_E_CLIENT_CLI->cli_pseudo."</a>	</span> <small>(".$avi->avi_date.")</small></div>";
 	    	echo "<div class='panel-body'>".$avi->avi_detail."</div>";
   		echo "</div>";
   	}

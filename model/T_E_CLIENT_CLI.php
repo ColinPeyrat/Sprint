@@ -169,11 +169,13 @@ class T_E_CLIENT_CLI extends Model
                 <option <?php if ($_SESSION['user']->cli_civilite == 'Mlle') { ?>selected="true" <?php }; ?>value="Mlle">Mlle</option>
                 </select>
                 <?php
-            } else
+            } else {
 
-            echo "<input class='form-control' type=\"text\" name=\"".$name[$i + 1]."\" value=\"$valuetext\"><br>";
-            echo "</div>";
-             $i++;
+                echo "<input class='form-control' type=\"text\" name=\"".$name[$i + 1]."\" value=\"$valuetext\"><br>";
+                echo "</div>";
+                 $i++;
+
+             }
 
 
 
@@ -183,5 +185,9 @@ class T_E_CLIENT_CLI extends Model
 
 
 
+    }
+    public static function findById($id_cli){
+        $c = new T_E_CLIENT_CLI($id_cli);
+        return $c;
     }
 }
