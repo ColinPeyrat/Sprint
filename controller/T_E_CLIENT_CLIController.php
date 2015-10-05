@@ -33,7 +33,7 @@ class T_E_CLIENT_CLIController extends Controller
     }
     public function unlog(){
         if(session_destroy()) {
-            header("Refresh:0; url=../sprint/");
+            header("Refresh:0; url=../Sprint/");
             $c = new SiteController();
             $c ->index();
         }

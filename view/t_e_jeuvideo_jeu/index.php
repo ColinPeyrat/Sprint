@@ -5,7 +5,6 @@
 	<div class="form-group col-xs-2">
 		<select class="form-control" name="typesearch">
 			<option value="tous">Tous</option>
-			<option value="console">Type de console</option>
 			<?php
 			foreach($data[1] as $ray){
 				echo"<option value='".$ray->ray_id."'>".$ray->ray_nom."</option>";

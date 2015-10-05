@@ -22,9 +22,9 @@
         <label for="civilite">Civilité</label>
         <select class="form-control" name="civilite">
             <option value="">--Choisissez--</option>
-            <option <?php if ($_POST['civilite'] == 'M.') { ?>selected="true" <?php }; ?>value="M.">M.</option>
-            <option <?php if ($_POST['civilite'] == 'Mme') { ?>selected="true" <?php }; ?>value="Mme">Mme</option>
-            <option <?php if ($_POST['civilite'] == 'Mlle') { ?>selected="true" <?php }; ?>value="Mlle">Mlle</option>
+            <option value="M.">M.</option>
+            <option value="Mme">Mme</option>
+            <option value="Mlle">Mlle</option>
         </select>
     </div>
 
