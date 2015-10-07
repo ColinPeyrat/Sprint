@@ -20,7 +20,9 @@ class T_J_JEURAYON_JER extends Model
         $games = array();
         if ($st->rowCount() >= 1){
 			while($row = $st->fetch(PDO::FETCH_ASSOC)) {
-				$games[] = new T_E_JEUVIDEO_JEU($row['jeu_id']);
+				$game = new T_E_JEUVIDEO_JEU($row['jeu_id']);
+                $game->photo = T_E_PHOTO_PHO::findByGame($row['jeu_id']);
+                $games[] = $game;
 			}
         }
         return $games;

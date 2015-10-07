@@ -47,6 +47,6 @@
     </div>
 
 
-    <input name="action" type="submit" value="S'inscrire" />
+    <input name="action" type="submit" value="S'inscrire" class="btn btn-primary" />
 </form>
 <?php

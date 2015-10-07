@@ -5,9 +5,15 @@ class T_E_JEUVIDEO_JEUController extends Controller
     public function index() {
     	if(isset($_POST['searchbtn'])){
 			if($_POST['searchbtn'] == 'search'){
-				$a = new T_J_JEURAYON_JER();
-				$games = $a->findGameByRay($_POST['typesearch'], $_POST['searchinput']);
-				$this->render("index", [T_E_JEUVIDEO_JEU::findAll(), T_R_RAYON_RAY::findall(), $games]);
+				$j = new T_J_JEURAYON_JER();
+				$games = $j->findGameByRay($_POST['typesearch'], $_POST['searchinput']);
+                if(Count($games)>0){
+                	$this->render("index", [T_E_JEUVIDEO_JEU::findAll(), T_R_RAYON_RAY::findall(), $games]);
+                } else {
+                    $m = new message();
+                    $m->setFlash("Aucun résuiltat pour cette recherche.");
+                    $this->render("index", [T_E_JEUVIDEO_JEU::findAll(), T_R_RAYON_RAY::findall(), $games]);
+                }
 			}
 		}
 
@@ -17,7 +23,7 @@ class T_E_JEUVIDEO_JEUController extends Controller
     public function findBySelection(){
     	if(isset($_POST["id_console"])){
     		$id_console = $_POST["id_console"];
-    		$this->render("displaySelection", T_E_JEUVIDEO_JEU::findBySelection($id_console));
+    		$this->render("find", T_E_JEUVIDEO_JEU::findBySelection($id_console));
     	}
     	else{
     		$this->render("find");

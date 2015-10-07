@@ -13,6 +13,8 @@ class T_E_JEUVIDEO_JEU extends Model
     protected $_jeu_publiclegal;
     protected $_jeu_stock;
 
+    protected $_photo;
+
 
     public static function findBySelection($id_console){
         $class = get_called_class();
@@ -22,8 +24,12 @@ class T_E_JEUVIDEO_JEU extends Model
         $list = array();
         foreach(T_E_JEUVIDEO_JEU::findAll() as $row){
             if($row->T_R_CONSOLE_CON->con_id == $id_console){
-                $list[] = new $class($row->jeu_id,$row->T_R_EDITEUR_EDI, $row->_T_R_CONSOLE_CON, $row->jeu_nom, $row->jeu_prixttc);
-            }
+                $game =  new T_E_JEUVIDEO_JEU($row->jeu_id);
+                $game->photo = T_E_PHOTO_PHO::findByGame($row->jeu_id);
+                $list[] = $game;
+        }
+
+
         }
         return $list;
     }
