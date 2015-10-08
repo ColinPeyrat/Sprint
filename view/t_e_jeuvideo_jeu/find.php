@@ -1,6 +1,6 @@
 <h2>Chercher un jeu par plateforme</h2>
 
-
+<link href="public/css/shop-homepage.css" rel="stylesheet">
 <table class="table table-condensed">
 
 <form method="post" class="form-inline" action="?r=jeu/findBySelection">
@@ -22,20 +22,30 @@
   </div>
 </form>
 
-<?php
-
-if(isset($data)){
-	foreach($data as $jeu){
-	    echo "<tr>";
-	    echo "<td><img src='".$jeu->photo."'></td>";
-	    echo "<td>".$jeu->jeu_nom."</td>";
-	    echo "<td>".$jeu->jeu_prixttc."€</td>";
-	    echo "<td>".$jeu->T_R_EDITEUR_EDI->edi_nom."</td>";
-	  	echo "<td>".$jeu->T_R_CONSOLE_CON->con_nom."</td>";
-	  	echo "<td><a href='?r=avi/findByGame&id_game=".$jeu->jeu_id."'> Avis </a></td>";
-	    echo "</tr>";
-
-	}
-	echo "</table>";
-}
-?>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<?php
+			if(isset($data)){
+				foreach($data as $jeu){
+				    echo '<div class="col-sm-3 col-lg-3 col-md-3">';
+			            echo '<div class="thumbnail">';
+			                if(isset($jeu->photo[0]))
+								echo "<img src='".$jeu->photo."'>";
+			                echo '<div class="caption">';
+				                echo '<h4><a href="#">'.$jeu->jeu_nom.'</a>';
+				                echo '</h4>';
+				                echo '<p>Editeur : '.$jeu->T_R_EDITEUR_EDI->edi_nom.'<br/>Console : '.$jeu->T_R_CONSOLE_CON->con_nom.'</p>';
+			                echo '</div>';
+			                echo '<div class="ratings">';
+								echo "<p class='pull-right'><a href='?r=avi/findByGame&id_game=".$jeu->jeu_id."'> Avis </a><</p>";
+			                    echo '<p><h4>'.$jeu->jeu_prixttc.'€</h4><p>';
+			                echo '</div>';
+			            echo '</div>';
+			        echo '</div>';
+				}
+			}
+			?>
+		</div>
+	</div>
+</div>
