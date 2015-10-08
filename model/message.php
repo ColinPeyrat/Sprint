@@ -11,7 +11,12 @@ class message
     }
     public function flash(){
         if(isset($_SESSION['flash'])){
-            echo "<div class=\"alert alert-".$_SESSION['flash']['type']."\" role=\"alert\">".$_SESSION['flash']['message']."</div>";
+            if($_SESSION['flash']['type'] == 'danger'){
+                $animate = " animated shake";
+            } else {
+                $animate =' animated bounce';
+            }
+            echo "<div class=\"alert alert-".$_SESSION['flash']['type'].$animate."\" role=\"alert\">".$_SESSION['flash']['message']."</div>";
             unset($_SESSION['flash']);
 
         }

@@ -82,10 +82,13 @@ class Model {
 
 	public function __get($fieldName) {
 		$varName = "_".$fieldName;
-		if (property_exists(get_class($this), $varName))
+
+		if (property_exists(get_class($this), $varName)) {
 			return $this->$varName;
-		else
-			throw new Exception("Unknown variable: ".$fieldName);
+		} else {
+            var_dump(get_class($this),$varName);
+            throw new Exception("Unknown variable: ".$fieldName);
+        }
 	}
 
 

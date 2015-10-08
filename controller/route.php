@@ -53,7 +53,6 @@ $tables = [
 // Gestion des la route : paramètre r = controller/action
 if (isset(parameters()["r"])) {
 
-
 	if(strlen(parameters()["r"]) > 3  ) {
 
 		//TRANSFORME LE cli/login en T_E_CLIENT_CLI/login

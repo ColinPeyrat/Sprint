@@ -26,6 +26,11 @@ class T_E_JEUVIDEO_JEUController extends Controller
     public function findBySelection(){
     	if(isset($_POST["id_console"])){
     		$id_console = $_POST["id_console"];
+            $data = T_E_JEUVIDEO_JEU::findBySelection($id_console);
+            if($data == null){
+                $m = new message();
+                $m->setFlash("Aucun résuiltat pour cette recherche.");
+            }
     		$this->render("find", T_E_JEUVIDEO_JEU::findBySelection($id_console));
     	}
     	else{

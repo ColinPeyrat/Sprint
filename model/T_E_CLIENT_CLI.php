@@ -153,6 +153,7 @@ class T_E_CLIENT_CLI extends Model
             $name[] = substr($key,5);
             $valu[] = $value;
         }
+
         foreach ($info as $inf) {
 
             if($valu[$i + 1] == null)
@@ -161,23 +162,24 @@ class T_E_CLIENT_CLI extends Model
                 $valuetext = $valu[$i + 1];
             echo "<div class='form-group'>";
             echo "<label>$inf</label>";
-            if($name[$i + 1] =="civilite") {
+
+            if($name[$i + 1] == "civilite") {
                 ?>
                 <select class="form-control" name="civilite">
-                <option <?php if ($_SESSION['user']->cli_civilite == 'M.') { ?>selected="true" <?php }; ?> value="M.">M.</option>
-                <option <?php if ($_SESSION['user']->cli_civilite == 'Mme') { ?>selected="true" <?php }; ?>value="Mme">Mme</option>
-                <option <?php if ($_SESSION['user']->cli_civilite == 'Mlle') { ?>selected="true" <?php }; ?>value="Mlle">Mlle</option>
+                    <option value="M.">M.</option>
+                    <option value="Mme">Mme</option>
+                    <option value="Mlle">Mlle</option>
                 </select>
                 <?php
             } else {
 
                 echo "<input class='form-control' type=\"text\" name=\"".$name[$i + 1]."\" value=\"$valuetext\"><br>";
                 echo "</div>";
-                 $i++;
+
 
              }
 
-
+            $i++;
 
         }
         echo "<input name='action' type='submit' value='Modifier'>";

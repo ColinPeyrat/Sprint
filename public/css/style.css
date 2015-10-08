@@ -45,3 +45,6 @@
     -moz-border-radius: 6px 0 6px 6px;
     border-radius: 6px 0 6px 6px;
 }
+div.thumbnail img{
+    margin-top: 10px;
+}
