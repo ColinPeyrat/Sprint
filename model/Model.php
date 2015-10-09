@@ -86,7 +86,6 @@ class Model {
 		if (property_exists(get_class($this), $varName)) {
 			return $this->$varName;
 		} else {
-            var_dump(get_class($this),$varName);
             throw new Exception("Unknown variable: ".$fieldName);
         }
 	}

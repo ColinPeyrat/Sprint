@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="public/css/animate.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="http://www4-fr.fnac-static.com/nav/images/favicon.ico">
 </head>
 <body>
 <div class="container">
@@ -47,6 +48,9 @@
                     }
                     if(isset($_SESSION['user']) && $_SESSION['user']->role == "Service vente"){
                         echo "<li><a href='?r=srv'>Espace service vente</a></li>";
+                    }
+                    if(isset($_SESSION['user']) && $_SESSION['user']->role == "Service communication"){
+                        echo "<li><a href='?r=src'>Espace service communication</a></li>";
                     }
 
                     ?>
