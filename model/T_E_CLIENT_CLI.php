@@ -194,7 +194,7 @@ class T_E_CLIENT_CLI extends Model
         echo "<div class='form-group'>";
             echo "<label class='control-label col-sm-2'></label>";
             echo "<div class='col-sm-10'>";
-                echo "<button type='submit' name='addbtn' value='search' class='btn btn-primary'>Ajouter</button>";
+                echo "<button type='submit' name='action' value='Modifier' class='btn btn-primary'>Modifier</button>";
             echo "</div>";
         echo "</div>";  
         echo "</form>";

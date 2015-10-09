@@ -7,7 +7,7 @@ class T_E_CLIENT_CLIController extends Controller
         if(isset($_SESSION['user']) && $_SESSION['user']->connected)
             $this->render("index");
         else {
-            if (isset(parameters()["action"]) &&  parameters()["action"] == "Se Connecter") {
+            if (isset(parameters()["action"]) &&  parameters()["action"] == "Se connecter") {
                 $c = new T_E_CLIENT_CLI();
                 $c->__set("cli_mel", trim(parameters()["login"]));
                 $c->__set("cli_motpasse", parameters()["password"]);
