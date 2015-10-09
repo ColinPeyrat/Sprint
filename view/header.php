@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="public/css/animate.css">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/locales/bootstrap-datepicker.fr.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
 </head>
 <body>
 <div class="container">
@@ -47,6 +51,9 @@
                     }
                     if(isset($_SESSION['user']) && $_SESSION['user']->role == "Service vente"){
                         echo "<li><a href='?r=srv'>Espace service vente</a></li>";
+                    }
+                    if(isset($_SESSION['user']) && $_SESSION['user']->role == "Service communication"){
+                        echo "<li><a href='?r=src'>Espace service communication</a></li>";
                     }
 
                     ?>

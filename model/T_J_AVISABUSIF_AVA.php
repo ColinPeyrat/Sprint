@@ -7,45 +7,68 @@ class T_J_AVISABUSIF_AVA extends Model
 
     public function __construct($id=null,$idUser=null,$idAvis=null) {
         if ($id == null) {
-            $st = db()->prepare("INSERT INTO T_J_AVISABUSIF_AVA (cli_id, avi_id) VALUES (:cli, :avi)");
-            $st->bindParam(':cli', $idUser);
-            $st->bindParam(':avi', $idAvis);
-            $st->execute();
+            if($idUser != null && $idAvis != null) {
+                $st = db()->prepare("select * from T_J_AVISABUSIF_AVA where avi_id=:id and cli_id=:cli");
+                $st->bindParam(':id', $idAvis);
+                $st->bindParam(':cli', $idUser);
+                $st->execute();
+                $row = $st->fetch(PDO::FETCH_ASSOC);
+                if($row){
+                    $this->T_E_AVIS_AVI = new T_E_AVIS_AVI($row['avi_id']);
+                    $this->T_E_CLIENT_CLI = new T_E_CLIENT_CLI($row['cli_id']);
+                } else {
 
-//            $st = db()->prepare("insert into T_J_AVISABUSIF_AVA default values returning avi_id");
-//            $st->execute();
-//            $row = $st->fetch();
-//            $this->avi_id = $row['avi_id'];
-//            var_dump($row);
-            if($idUser != null && $idAvis != null){
-                $this->T_E_CLIENT_CLI = $idUser;
-                $this->T_E_AVIS_AVI = $idAvis;
+                }
+            } else {
+                $st = db()->prepare("INSERT INTO T_J_AVISABUSIF_AVA (cli_id, avi_id) VALUES (:cli, :avi)");
+                $st->bindParam(':cli', $idUser);
+                $st->bindParam(':avi', $idAvis);
+                $st->execute();
             }
+
+
 
         } else {
-            $st = db()->prepare("select * from T_J_AVISABUSIF_AVA where avi_id=:id");
-            $st->bindParam(':id', $id);
-            $st->execute();
-            $list = array();
-            while($row = $st->fetch(PDO::FETCH_ASSOC)) {
-                $user = new T_E_CLIENT_CLI($row['cli_id']);
-                $avis = new T_E_AVIS_AVI($id);
-                $list[] = new T_J_AVISABUSIF_AVA('null',new T_E_CLIENT_CLI($row['cli_id']),new T_E_AVIS_AVI($id));
 
 
-            }
-            var_dump($list);
         }
 
     }
-//    public static function findAll() {
-//        $st = db()->prepare("select * from T_J_AVISABUSIF_AVA");
-//        $st->execute();
-//        $list = array();
-//        while($row = $st->fetch(PDO::FETCH_ASSOC)) {
-//            $list[] = new T_J_AVISABUSIF_AVA($row['avi_id']);
-//        }
-//        var_dump($list);
-//        return $list;
-//    }
+    public static function findAll() {
+        $st = db()->prepare("select * from T_J_AVISABUSIF_AVA");
+        $st->execute();
+        $list = array();
+        while($row = $st->fetch(PDO::FETCH_ASSOC)) {
+            $list[] = new T_J_AVISABUSIF_AVA(null,$row['cli_id'],$row['avi_id']);
+        }
+        return $list;
+    }
+    public static function insertNewAva($idAvi,$idUser){
+        $st = db()->prepare("INSERT INTO T_J_AVISABUSIF_AVA(cli_id,avi_id) VALUES (:cli, :avi)");
+        $st->bindParam(':cli', $idUser);
+        $st->bindParam(':avi', $idAvi);
+        $st->execute();
+    }
+    public static function FindAllByIdAvis($id){
+        $st = db()->prepare("select * from T_J_AVISABUSIF_AVA where avi_id=:id");
+        $st->bindParam(':id', $id);
+        $st->execute();
+        $row = $st->fetchAll(PDO::FETCH_ASSOC);
+        $test = array();
+        foreach($row as $field=>$value) {
+            $ava = new T_J_AVISABUSIF_AVA(null,$value['cli_id'],$value['avi_id']);
+            $test[] = $ava;
+        }
+        return $test;
+    }
+    public function __set($fieldName, $value) {
+        $varName = "_".$fieldName;
+        if ($value != null) {
+            if (property_exists(get_class($this), $varName)) {
+                $this->$varName = $value;
+
+            } else
+                throw new Exception("Unknown variable: ".$fieldName);
+        }
+    }
 }

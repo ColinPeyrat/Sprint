@@ -47,7 +47,8 @@ $tables = [
 	'gen' => 'T_R_GENRE_GEN',
 	'pay' => 'T_R_PAYS_PAY',
 	'ray' => 'T_R_RAYON_RAY',
-	'srv' => 'SERVICE_VENTE'
+	'srv' => 'SERVICE_VENTE',
+	'src' => 'SERVICE_COMMUNICATION'
 ];
 
 // Gestion des la route : paramètre r = controller/action
@@ -84,13 +85,23 @@ if (isset(parameters()["r"])) {
 		if(!isset($_SESSION['user'])) {
 			$c = new T_E_CLIENT_CLIController();
 			$m->setFlash("Veuillez d'abord vous connecter");
-			$controller = "T_E_CLIENT_CLIController";
-			$action = "login";
+			header("Refresh:0; url=../Sprint/?r=cli/login");
 		} else if($_SESSION['user']->role != "Service vente"){
-			$m->setFlash("Espace du site reservé au service vente.");
-			$controller = "SiteController";
-			$action = "index";
+			$m->setFlash("Espace du site réservé au membre du service vete");
+			header("Refresh:0; url=../Sprint/");
 		}
+	}
+	if($controller == "SERVICE_COMMUNICATIONController")
+	{
+		if(!isset($_SESSION['user'])) {
+			$c = new T_E_CLIENT_CLIController();
+			$m->setFlash("Veuillez d'abord vous connecter");
+			header("Refresh:0; url=../Sprint/?r=cli/login");
+		} else if($_SESSION['user']->role != "Service communication"){
+			$m = new message();
+			$m->setFlash("Espace du site réservé au membre du service communication");
+			header("Refresh:0; url=../Sprint/");
+	}
 	}
 	$c = new $controller();
 	$c->$action();
