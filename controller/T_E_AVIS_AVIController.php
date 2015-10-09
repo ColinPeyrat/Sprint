@@ -12,7 +12,7 @@ class T_E_AVIS_AVIController extends Controller
             } else {
                 $m = new message();
                 $m->setFlash("Aucun avis pour ce jeu.","warning");
-                header("Refresh:0; url=?r=jeu");
+                $this->render("displayByGame", $id_game);
             }
 	    }
 	}
@@ -37,7 +37,13 @@ class T_E_AVIS_AVIController extends Controller
             $this->render("displayByGame",T_E_AVIS_AVI::findByGame($jeu->jeu_id));
     	}
     	else{
-    		$this->render("add");
+            if(isset($_SESSION['user']))
+    		  $this->render("add");
+            else {
+                $m = new message();
+                $m->setFlash("Vous devez etre connecté.");
+                header('refresh:0;url=../Sprint/?r=cli/login');
+            }
     	}
     }
 
