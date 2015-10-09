@@ -9,7 +9,7 @@
         <input class="form-control" type="password" name="password" id="password" />
     </div>
     <div class="form-group col-xs-3"><br/>
-    	<input name="action" type="submit" value="Se Connecter" class="btn btn-primary"/>
+    	<input name="action" type="submit" value="Se connecter" class="btn btn-primary"/>
     </div>
 	
 </form>
