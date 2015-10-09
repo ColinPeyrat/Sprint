@@ -3,15 +3,23 @@
 class T_E_AVIS_AVIController extends Controller
 {
 	public function findByGame(){
+        //echo $_SERVER['REQUEST_URI'];
 	    if(isset($_GET["id_game"])){
 	    	$id_game = $_GET["id_game"];
-	    	$this->render("displayByGame", T_E_AVIS_AVI::findByGame($id_game));
+            $data = T_E_AVIS_AVI::findByGame($id_game);
+            if(count($data)>0){
+	    	  $this->render("displayByGame", $data);
+            } else {
+                $m = new message();
+                $m->setFlash("Aucun avis pour ce jeu.","warning");
+                header("Refresh:0; url=?r=jeu");
+            }
 	    }
 	}
 
 
 	public function add(){
-
+        $m = new message();
     	if(isset($_POST["addbtn"]) && $_POST["addbtn"] == "Ajouter"){
 
             $avi = new T_E_AVIS_AVI();

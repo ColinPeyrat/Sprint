@@ -21,17 +21,11 @@ class T_E_AVIS_AVI extends Model
         $empty = null;
         $return = null;
         foreach(T_E_AVIS_AVI::findAll() as $row){
-            if($row->T_E_JEUVIDEO_JEU->jeu_id == $id_game){
+            if($row->_T_E_JEUVIDEO_JEU->jeu_id == $id_game){
                 $list[] = new $class($row->avi_id);
-                $return = $list;
-            }
-            else  { 
-                $empty = $id_game; 
-                $return = $empty;
-                $m->setFlash("Il n'y a aucun avis pour ce jeu.","warning");
             }
         }
-        return $return;
+        return $list;
     }
 
     public function add(){
