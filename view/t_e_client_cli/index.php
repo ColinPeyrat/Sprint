@@ -9,7 +9,7 @@ if(isset($_SESSION['user'])) {
     $c->displayInfo();
     ?>
     <form method="post" action="?r=cli/modify">
-        <input name="action" type="submit" value="Modifier son compte">
+        <input name="action" type="submit" value="Modifier son compte" class="btn btn-primary">
     </form>
     <?php
 
