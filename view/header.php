@@ -52,6 +52,9 @@
                     if(isset($_SESSION['user']) && $_SESSION['user']->role == "Service vente"){
                         echo "<li><a href='?r=srv'>Espace service vente</a></li>";
                     }
+                    if(isset($_SESSION['user']) && $_SESSION['user']->role == "Service communication"){
+                        echo "<li><a href='?r=src'>Espace service communication</a></li>";
+                    }
 
                     ?>
                 </ul>

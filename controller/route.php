@@ -90,7 +90,7 @@ if (isset(parameters()["r"])) {
 			$m->setFlash("Espace du site réservé au membre du service vete");
 			header("Refresh:0; url=../Sprint/");
 		}
-	}	
+	}
 	if($controller == "SERVICE_COMMUNICATIONController")
 	{
 		if(!isset($_SESSION['user'])) {
