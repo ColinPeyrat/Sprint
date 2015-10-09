@@ -31,7 +31,7 @@ class Model {
                             'adr' => 'T_E_ADRESSE_ADR',
                             'avi' => 'T_E_AVIS_AVI',
                             'cli' => 'T_E_CLIENT_CLI',
-                            'con' => 'T_E_COMMANDE_COM',
+                            'com' => 'T_E_COMMANDE_COM',
                             'jeu' => 'T_E_JEUVIDEO_JEU',
                             'mot' => 'T_E_MOTCLE_MOT',
                             'pho' => 'T_E_PHOTO_PHO',
