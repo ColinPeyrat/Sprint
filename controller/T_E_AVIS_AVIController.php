@@ -5,10 +5,34 @@ class T_E_AVIS_AVIController extends Controller
 	public function findByGame(){
 	    if(isset($_GET["id_game"])){
 	    	$id_game = $_GET["id_game"];
-	    	
 	    	$this->render("displayByGame", T_E_AVIS_AVI::findByGame($id_game));
 	    }
 	}
+
+
+	public function add(){
+
+    	if(isset($_POST["addbtn"]) && $_POST["addbtn"] == "Ajouter"){
+
+            $avi = new T_E_AVIS_AVI();
+            $client = new T_E_CLIENT_CLI($_GET['id_client']);
+            $jeu = new T_E_JEUVIDEO_JEU($_GET['id_game']);
+
+            $avi->__set("T_E_CLIENT_CLI",$client);
+            $avi->__set("T_E_JEUVIDEO_JEU",$jeu);
+            $avi->__set("avi_titre",$_POST["titre"]);
+            $avi->__set("avi_detail",$_POST["detail"]);
+            $avi->__set("avi_note",$_POST["note"]);
+
+            $avi->add();
+            $m->setFlash($client->cli_prenom.", votre avis a bien été déposé.","success");
+            $this->render("displayByGame",T_E_AVIS_AVI::findByGame($jeu->jeu_id));
+    	}
+    	else{
+    		$this->render("add");
+    	}
+    }
+
 	public function signal(){
 		if(isset($_GET['id_avi'])){
 			if(!isset($_SESSION['user'])){

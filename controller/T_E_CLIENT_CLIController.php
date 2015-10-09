@@ -119,6 +119,8 @@ class T_E_CLIENT_CLIController extends Controller
             $this->render("register");
         }
     }
+
+    
     public function viewOne(){
         if(isset($_GET["id_cli"])){
             $id_cli = $_GET["id_cli"];

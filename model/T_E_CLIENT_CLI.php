@@ -145,7 +145,7 @@ class T_E_CLIENT_CLI extends Model
 
     public function displayModifyInfo() {
         ?>
-        <form method="post" action="?r=cli/modify" role="form">
+        <form class="form-horizontal" method="post" action="?r=cli/modify" role="form">
         <?php
         $info = array("Mail","Mot de passe","Pseudo","Civilité","Nom","Prenom","Téléphone Fixe","Téléphone Portable");
         $i = 0;
@@ -163,20 +163,26 @@ class T_E_CLIENT_CLI extends Model
             else
                 $valuetext = $valu[$i + 1];
             echo "<div class='form-group'>";
-            echo "<label>$inf</label>";
+            echo "<label class='control-label col-sm-2'>$inf</label>";
 
             if($name[$i + 1] == "civilite") {
                 ?>
+                <div class='col-sm-10'>
                 <select class="form-control" name="civilite">
                     <option value="M.">M.</option>
                     <option value="Mme">Mme</option>
                     <option value="Mlle">Mlle</option>
                 </select>
+                </div>
+            </div>
                 <?php
             } else {
 
-                echo "<input class='form-control' type=\"text\" name=\"".$name[$i + 1]."\" value=\"$valuetext\"><br>";
+                echo "<div class='col-sm-10'>";
+                    echo "<input class='form-control' type=\"text\" name=\"".$name[$i + 1]."\" value=\"$valuetext\"><br>";
+                    echo "</div>";
                 echo "</div>";
+
 
 
              }
@@ -184,12 +190,16 @@ class T_E_CLIENT_CLI extends Model
             $i++;
 
         }
-        echo "<input name='action' type='submit' value='Modifier'>";
+
+        echo "<div class='form-group'>";
+            echo "<label class='control-label col-sm-2'></label>";
+            echo "<div class='col-sm-10'>";
+                echo "<button type='submit' name='addbtn' value='search' class='btn btn-primary'>Ajouter</button>";
+            echo "</div>";
+        echo "</div>";  
         echo "</form>";
-
-
-
     }
+
     public static function findById($id_cli){
         $c = new T_E_CLIENT_CLI($id_cli);
         return $c;

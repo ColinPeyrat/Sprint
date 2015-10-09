@@ -17,7 +17,7 @@ class T_E_JEUVIDEO_JEUController extends Controller
         	$this->render("index", [$games, T_R_RAYON_RAY::findall()]);
         } else {
             $m = new message();
-            $m->setFlash("Aucun résuiltat pour cette recherche.");
+            $m->setFlash("Aucun résuiltat pour cette recherche.","warning");
             $this->render("index", [$games, T_R_RAYON_RAY::findall()]);
         }
 			
@@ -29,7 +29,7 @@ class T_E_JEUVIDEO_JEUController extends Controller
             $data = T_E_JEUVIDEO_JEU::findBySelection($id_console);
             if($data == null){
                 $m = new message();
-                $m->setFlash("Aucun résuiltat pour cette recherche.");
+                $m->setFlash("Aucun résultat pour cette recherche.","warning");
             }
     		$this->render("find", T_E_JEUVIDEO_JEU::findBySelection($id_console));
     	}

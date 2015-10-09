@@ -1,10 +1,14 @@
 
 <?php
-if(count($data)==0){
-	echo "<div class='alert alert-warning' role='alert'>Aucun avis trouvé pour ce jeu</div>";
+
+if(is_string($data)){
+	//echo "<div class='alert alert-warning' role='alert'>Aucun avis trouvé pour ce jeu</div>";
+	echo "<a href='?r=avi/add&id_game=".$data."' ><button type='button' class='btn btn-primary'>Deposer un avis</button></a>";
+
 
 }
 else{
+	echo "<a href='?r=avi/add&id_game=".$data[0]->T_E_JEUVIDEO_JEU->jeu_id."' ><button type='button' class='btn btn-primary'>Deposer un avis</button></a>";
 	echo "<h2>Avis sur le jeu</h2>";
 	foreach($data as $avi){
 		$star = "";
@@ -25,4 +29,3 @@ else{
   		echo "</div>";
   	}
  }
-?>
