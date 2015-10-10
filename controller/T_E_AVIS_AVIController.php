@@ -82,4 +82,18 @@ class T_E_AVIS_AVIController extends Controller
 
 		}
 	}
+
+    public function saveLike(){
+        if(isset($_SESSION['user'])){
+            if($_POST['type'] == 'like'){
+                $a = new T_J_AVISRECOMMANDE_AVR();
+                $a->saveAvisRecommande($_SESSION['user']->cli_id, $_POST['avisId']);
+            }
+            else{
+                $a = new T_J_AVISDECONSEILLE_AVD();
+                echo $a->saveAvisDecons($_SESSION['user']->cli_id, $_POST['avisId']);
+            }
+        }
+        echo T_J_AVISRECOMMANDE_AVR::getAvisRecommande($_POST['avisId']).'/'.T_J_AVISDECONSEILLE_AVD::getAvisDecons($_POST['avisId']);
+    }
 }
