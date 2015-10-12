@@ -119,41 +119,25 @@ class SERVICE_VENTEController extends Controller
 		}
         $this->render("addvideo", T_E_JEUVIDEO_JEU::findAll());
 	}
-	
+
 	public function order(){
 
 		if(isset($_POST['date'])){
-
-			$c = new T_E_COMMANDE_COM;
-			$c = $c->findByDate($_POST['date']);
+			$c = T_E_COMMANDE_COM::findByDate($_POST['date']);
 		}
 		else
-        	$c = T_E_COMMANDE_COM::findAll();
+			$c = T_E_COMMANDE_COM::findAll();
 
-		$p = db()->prepare('select * from T_J_LIGNECOMMANDE_LEC');
-        $p->execute();
-        $p = $p->fetchAll();
-
-        $data = array();
-        foreach($c as $k => $v){
+		$data = array();
+		foreach($c as $key=>$value){
 			unset($d);
-            $d['client'] = $v->T_E_CLIENT_CLI;
-            $d['relais'] = $v->T_E_RELAIS_REL;
-            $d['adresse'] = $v->T_E_ADRESSE_ADR;
-            $d['date_commande'] =  $v->com_date;
-			$d['produit'] = array();
-            foreach($p as $y => $z){
-                if($z['com_id'] == $v->com_id) {
-					unset($j);
-					$j['jeu'] = new T_E_JEUVIDEO_JEU($z['jeu_id']);
-					$j['quantite'] = $z['lec_quantite'];
-					array_push($d['produit'],$j);
-				}
-            }
-            array_push($data,$d);
-        }
+			$d['commande'] = $value;
+			foreach(T_J_LIGNECOMMANDE_LEC::findAllProductforOneOrder($value->com_id) as $k=>$v){
+				$d['produit'][] = $v;
+			}
+			array_push($data,$d);
+		}
 
-
-        $this->render("order", $data);
-    }
+		$this->render("order", $data);
+	}
 }
