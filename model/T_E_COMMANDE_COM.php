@@ -8,8 +8,8 @@ class T_E_COMMANDE_COM extends Model
     protected $_T_E_CLIENT_CLI;
     protected $_com_date;
 	
-	public function findByDate($date){
-        $c = $this->findAll();
+	public static function findByDate($date){
+        $c = T_E_COMMANDE_COM::findAll();
 
         $commande = array();
         foreach($c as $k => $v){

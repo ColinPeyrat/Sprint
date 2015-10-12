@@ -39,15 +39,15 @@
                 </tr>
                 <?php foreach($data as $k => $v): ?>
                     <tr>
-                        <td><?php echo $v['client']->cli_nom ?></td>
-                        <?php if($v['relais']->rel_id != null): ?>
-                            <td><?php echo $v['relais']->rel_ville ?></td>
-                            <td><?php echo $v['relais']->rel_cp ?></td>
+                        <td><?php echo $v['commande']->T_E_CLIENT_CLI->cli_nom ?></td>
+                        <?php if($v['commande']->T_E_RELAIS_REL->rel_id != null): ?>
+                            <td><?php echo $v['commande']->T_E_RELAIS_REL->rel_ville ?></td>
+                            <td><?php echo $v['commande']->T_E_RELAIS_REL->rel_cp ?></td>
                         <?php else: ?>
-                            <td><?php echo $v['adresse']->adr_ville ?></td>
-                            <td><?php echo $v['adresse']->adr_cp ?></td>
+                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_ville ?></td>
+                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_cp ?></td>
                         <?php endif; ?>
-                        <td><?php echo $v['date_commande'] ?></td>
+                        <td><?php echo $v['commande']->com_date ?></td>
                         <td><a data-toggle="modal" href="#" data-target="#modal<?php echo $k; ?>" >Plus d'information</a></td>
                     </tr>
                 <?php  endforeach; ?>
@@ -59,7 +59,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Commande de <?php echo $v['client']->cli_civilite.' '.$v['client']->cli_nom ?></h4>
+                            <h4 class="modal-title" id="myModalLabel">Commande de <?php echo $v['commande']->T_E_CLIENT_CLI->cli_civilite.' '.$v['commande']->T_E_CLIENT_CLI->cli_nom ?></h4>
                         </div>
                         <div class="modal-body">
                             <div class="row row-eq-height">
@@ -73,23 +73,23 @@
                                                 <table class="table">
                                                     <tr>
                                                         <td>Nom</td>
-                                                        <td><?php echo $v['client']->cli_nom ?></td>
+                                                        <td><?php echo $v['commande']->T_E_CLIENT_CLI->cli_nom ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Prénom</td>
-                                                        <td><?php echo $v['client']->cli_prenom ?></td>
+                                                        <td><?php echo $v['commande']->T_E_CLIENT_CLI->cli_prenom ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Email</td>
-                                                        <td><?php echo $v['client']->cli_mel ?></td>
+                                                        <td><?php echo $v['commande']->T_E_CLIENT_CLI->cli_mel ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Téléphone fixe</td>
-                                                        <td><?php echo $v['client']->cli_telfixe ?></td>
+                                                        <td><?php echo $v['commande']->T_E_CLIENT_CLI->cli_telfixe ?></td>
                                                     </tr>
                                                     <tr>
                                                         <td>Téléphone portable</td>
-                                                        <td><?php echo $v['client']->cli_telportable ?></td>
+                                                        <td><?php echo $v['commande']->T_E_CLIENT_CLI->cli_telportable ?></td>
                                                     </tr>
                                                 </table>
                                             </div>
@@ -104,59 +104,59 @@
                                         <div class="panel-body">
                                             <div class="table-responsive">
                                                 <table class="table">
-                                                    <?php if($v['relais']->rel_id != null): ?>
+                                                    <?php if($v['commande']->T_E_RELAIS_REL->rel_id != null): ?>
                                                         <tr>
                                                             <td>Type</td>
                                                             <td>Relais</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Nom</td>
-                                                            <td><?php echo $v['relais']->rel_nom ?></td>
+                                                            <td><?php echo $v['commande']->T_E_RELAIS_REL->rel_nom ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Rue</td>
-                                                            <td><?php echo $v['relais']->rel_rue ?></td>
+                                                            <td><?php echo $v['commande']->T_E_RELAIS_REL->rel_rue ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Ville</td>
-                                                            <td><?php echo $v['relais']->rel_ville ?></td>
+                                                            <td><?php echo $v['commande']->T_E_RELAIS_REL->rel_ville ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Code Postal</td>
-                                                            <td><?php echo $v['relais']->rel_cp ?></td>
+                                                            <td><?php echo $v['commande']->T_E_RELAIS_REL->rel_cp ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Pays</td>
-                                                            <td><?php echo $v['relais']->T_R_PAYS_PAY->pay_nom ?></td>
+                                                            <td><?php echo $v['commande']->T_E_RELAIS_REL->T_R_PAYS_PAY->pay_nom ?></td>
                                                         </tr>
                                                     <?php else: ?>
                                                         <tr>
                                                             <td>Type</td>
-                                                            <td>Adresse personnel ('<?php echo $v['adresse']->adr_type ?>')</td>
+                                                            <td>Adresse personnel ('<?php echo $v['commande']->T_E_ADRESSE_ADR->adr_type ?>')</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Nom</td>
-                                                            <td><?php echo $v['adresse']->adr_nom ?></td>
+                                                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_nom ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Rue</td>
-                                                            <td><?php echo $v['adresse']->adr_rue ?></td>
+                                                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_rue ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Complément rue</td>
-                                                            <td><?php echo $v['adresse']->adr_complementrue ?></td>
+                                                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_complementrue ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Ville</td>
-                                                            <td><?php echo $v['adresse']->adr_ville ?></td>
+                                                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_ville ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Code Postal</td>
-                                                            <td><?php echo $v['adresse']->adr_cp ?></td>
+                                                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_cp ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Pays</td>
-                                                            <td><?php echo $v['adresse']->T_R_PAYS_PAY->pay_nom ?></td>
+                                                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->T_R_PAYS_PAY->pay_nom ?></td>
                                                         </tr>
                                                     <?php endif; ?>
                                                 </table>
@@ -183,14 +183,14 @@
                                                         <td>Prix total</td>
                                                     </tr>
                                                     <?php $prixtotal = 0;
-                                                    foreach($v['produit'] as $k => $v): ?>
+                                                    foreach($v['produit'] as $key => $value): ?>
                                                         <tr>
-                                                            <td><?php echo $v['jeu']->jeu_nom ?></td>
-                                                            <td><?php echo $v['jeu']->T_R_EDITEUR_EDI->edi_nom ?></td>
-                                                            <td><?php echo $v['jeu']->T_R_CONSOLE_CON->con_nom ?></td>
-                                                            <td><?php echo $v['quantite'] ?></td>
-                                                            <td><?php echo $v['jeu']->jeu_prixttc ?> €</td>
-                                                            <td><?php $prixtotal += ($v['jeu']->jeu_prixttc*$v['quantite']); echo ($v['jeu']->jeu_prixttc*$v['quantite']) ?> €</td>
+                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->jeu_nom ?></td>
+                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->T_R_EDITEUR_EDI->edi_nom ?></td>
+                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->T_R_CONSOLE_CON->con_nom ?></td>
+                                                            <td><?php echo $value->lec_quantite ?></td>
+                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->jeu_prixttc ?> €</td>
+                                                            <td><?php $prixtotal += ($value->T_E_JEUVIDEO_JEU->jeu_prixttc*$value->lec_quantite); echo ($value->T_E_JEUVIDEO_JEU->jeu_prixttc*$value->lec_quantite) ?> €</td>
                                                         </tr>
                                                     <?php endforeach ?>
                                                     <tr>
