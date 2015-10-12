@@ -44,7 +44,7 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="?r=cli/login"><?php if(isset($_SESSION['user'])) echo "Connecté(e) : ".$_SESSION['user']->cli_pseudo; else echo "Se connecter" ?></a></li>
+                    <li><a href="?r=cli/login"><?php if(isset($_SESSION['user'])) echo "<i class='glyphicon glyphicon-user'></i> Connecté(e) : ".$_SESSION['user']->cli_pseudo; else echo "Se connecter" ?></a></li>
                     <?php
                     if(!isset($_SESSION['user'])){
                         echo "<li><a href='?r=cli/register'>S'inscrire</a></li>";
