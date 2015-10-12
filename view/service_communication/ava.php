@@ -14,6 +14,7 @@
             echo "<th>L'avis sur le jeux</th>";
             echo "<th>Signalé par</th>";
             echo "<th></th>";
+            echo "<th></th>";
             echo "</tr>";
         echo "</thead>";
 
@@ -21,7 +22,8 @@
             echo "<tr>";
                 echo "<td>".$ava->T_E_AVIS_AVI->T_E_JEUVIDEO_JEU->jeu_nom." "."<a href='#'  data-toggle='modal' data-target='#myModal".$ava->T_E_AVIS_AVI->avi_id."'>Voir l'avis</a>"."</td>";
                 echo "<td><small>".$ava->T_E_CLIENT_CLI->cli_civilite."</small> ".$ava->T_E_CLIENT_CLI->cli_nom." ".$ava->T_E_CLIENT_CLI->cli_prenom."</td>";
-                echo "<td>"."<a href='?r=src/removeavi&avi_id=".$ava->T_E_AVIS_AVI->avi_id."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span> Supprimer l'avis</a>"." <a href='?r=src/removeava&avi_id=".$ava->T_E_AVIS_AVI->avi_id."&cli_id=".$ava->T_E_CLIENT_CLI->cli_id."'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Supprimer l'avis abusif</a>"."</td>";
+                echo "<td>"."<a href='?r=src/removeavi&avi_id=".$ava->T_E_AVIS_AVI->avi_id."'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span> Supprimer l'avis</a></td>";
+                echo "<td>"."<a href='?r=src/removeava&avi_id=".$ava->T_E_AVIS_AVI->avi_id."&cli_id=".$ava->T_E_CLIENT_CLI->cli_id."'><span class='glyphicon glyphicon-remove' aria-hidden='true'></span> Ignorer l'avis abusif</a>"."</td>";
             echo "</tr>";
 
             ?>

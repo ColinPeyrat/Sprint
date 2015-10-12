@@ -19,6 +19,7 @@ class T_E_CLIENT_CLIController extends Controller
                     $this->render("login");
                 } else {
                     $_SESSION['user'] = $c;
+                    $_SESSION['cart'] = array();
                     $this->render("index");
                 }
 
@@ -76,6 +77,68 @@ class T_E_CLIENT_CLIController extends Controller
 
         }
     }
+    public function removefromcart(){
+        if(!isset($_SESSION['user'])) {
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté');
+        } else {
+            if(isset($_GET['jeu_id'])){
+                $idGame = $_GET['jeu_id'];
+                $m = new message();
+                $game = new T_E_JEUVIDEO_JEU($idGame);
+                if($game->jeu_id == null) {
+                    echo "Ce jeu n'existe pas";
+                } else {
+                    if (in_array($game, $_SESSION['cart'])) {
+                        $m->setFlash('Panier mis à jour', 'success');
+                        $key = array_search($game, $_SESSION['cart']);
+                        unset($_SESSION['cart'][$key]);
+
+                    } else {
+                        $m->setFlash('Cet article n\'est pas dans votre panier');
+                    }
+                }
+            }
+            header("Refresh:0; url=../Sprint/?r=cli/cart");
+        }
+    }
+    public function cart(){
+        if(!isset($_SESSION['user'])){
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté');
+        } else {
+            $data = $_SESSION['cart'];
+            $this->render("cart",$data);
+        }
+    }
+
+    public function addToCart(){
+        if(isset($_SESSION['user'])) {
+            if (isset($_GET['jeu_id'])) {
+                $id = $_GET['jeu_id'];
+                $game = new T_E_JEUVIDEO_JEU($id);
+                $gameAjax = false;
+                if($game->jeu_id == null){
+                    echo "Ce jeu n'existe pas";
+                } else {
+                    if(in_array($game,$_SESSION['cart'])) {
+
+                    } else {
+                        $_SESSION['cart'][] = $game;
+                        $gameAjax = true;
+                    }
+                }
+                echo json_encode($gameAjax);
+            }
+        } else {
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté');
+        }
+    }
+
     public function register(){
         $m = new message();
         if(isset($_SESSION['user'])) {

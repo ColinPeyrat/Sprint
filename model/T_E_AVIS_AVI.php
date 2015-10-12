@@ -40,13 +40,21 @@ class T_E_AVIS_AVI extends Model
     }
     public function deleteAvi(){
         $idAvis = $this->avi_id;
+
+        $st = db()->prepare("DELETE FROM T_J_AVISDECONSEILLE_AVD WHERE avi_id=:avi");
+        $st->bindParam(':avi', $idAvis);
+        $st->execute();
+
+        $st = db()->prepare("DELETE FROM T_J_AVISRECOMMANDE_AVR WHERE avi_id=:avi");
+        $st->bindParam(':avi', $idAvis);
+        $st->execute();
+
         $st = db()->prepare("DELETE FROM T_E_AVIS_AVI WHERE avi_id=:avi");
         $st->bindParam(':avi', $idAvis);
         $st->execute();
     }
     public function deleteAllAva(){
         $id = $this->avi_id;
-//        $st = db()->prepare("DELETE FROM T_E_AVIS_AVI WHERE avi_id=:avi");
         $allAvas = T_J_AVISABUSIF_AVA::FindAllByIdAvis($id);
         foreach ($allAvas as $ava) {
             $idAva = $ava->T_E_AVIS_AVI->avi_id;
@@ -58,7 +66,5 @@ class T_E_AVIS_AVI extends Model
         $avi = new T_E_AVIS_AVI($id);
         $avi->deleteAvi();
 
-//        $st->bindParam(':avi', $id);
-//        $st->execute();
     }
 }
