@@ -44,7 +44,37 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="?r=cli/login"><?php if(isset($_SESSION['user'])) echo "<i class='glyphicon glyphicon-user'></i> Connecté(e) : ".$_SESSION['user']->cli_pseudo; else echo "Se connecter" ?></a></li>
+<!--                    <li class="dropdown">-->
+<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <li><a href="#">Action</a></li>-->
+<!--                            <li><a href="#">Another action</a></li>-->
+<!--                            <li><a href="#">Something else here</a></li>-->
+<!--                            <li role="separator" class="divider"></li>-->
+<!--                            <li><a href="#">Separated link</a></li>-->
+<!--                            <li role="separator" class="divider"></li>-->
+<!--                            <li><a href="#">One more separated link</a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+                    <li><li class="dropdown">
+                       <?php if(isset($_SESSION['user'])){
+
+                                echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">';
+                                echo $_SESSION['user']->cli_prenom." ".$_SESSION['user']->cli_nom." <span class='caret'></span></a>";
+                                echo '<ul class="dropdown-menu">';
+                                echo '<li><a href="?r=cli"><i class="glyphicon glyphicon-shopping-cart"></i> Mon panier</a></li>';
+                                echo '<li role="separator" class="divider"></li>';
+                                echo '<li><a href="?r=cli"><i class="glyphicon glyphicon-user"></i> Mon compte</a></li>';
+                                echo '<li role="separator" class="divider"></li>';
+                                echo '<li><a href="?r=cli/unlog"><i class="glyphicon glyphicon-off"></i> Se deconnecter</a></li>';
+
+                           echo "</ul>";
+
+                            } else {
+
+                                echo "<li><a href='?r=cli/login'>Se connecter</a></li>";
+                            }
+                            ?></li>
                     <?php
                     if(!isset($_SESSION['user'])){
                         echo "<li><a href='?r=cli/register'>S'inscrire</a></li>";

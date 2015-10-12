@@ -7,7 +7,7 @@
                 <div class="panel-title text-center">Fnac.com</div>
             </div>
 
-            <div class="panel-body" >
+            <div class="panel-body">
 
                 <form name="form" id="form" class="form-horizontal" enctype="multipart/form-data" method="POST">
 
