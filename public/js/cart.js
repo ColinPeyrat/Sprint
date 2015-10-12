@@ -19,7 +19,7 @@ $(document).ready(function(){
                     }
             },
             error : function(resultat, statut, erreur){
-                alert('boufon');
+                window.location = "?r=cli/login";
             }
         });
     });
