@@ -84,6 +84,8 @@ class T_E_CLIENT_CLI extends Model
                     $client->_role="Service vente";
                 } else if($f["cli_id"] == 2){
                     $client->_role="Service communication";
+                } else if($f["cli_id"] == 3){
+                    $client->_role="Service client";
                 }
                 $client->_connected = true;
             return $client;

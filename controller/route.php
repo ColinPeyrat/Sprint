@@ -48,7 +48,8 @@ $tables = [
 	'pay' => 'T_R_PAYS_PAY',
 	'ray' => 'T_R_RAYON_RAY',
 	'srv' => 'SERVICE_VENTE',
-	'src' => 'SERVICE_COMMUNICATION'
+	'src' => 'SERVICE_COMMUNICATION',
+	'srl' => 'SERVICE_CLIENT'
 ];
 
 // Gestion des la route : paramètre r = controller/action
@@ -83,26 +84,40 @@ if (isset(parameters()["r"])) {
 	if($controller == "SERVICE_VENTEController")
 	{
 		if(!isset($_SESSION['user'])) {
-			$c = new T_E_CLIENT_CLIController();
 			$m->setFlash("Veuillez d'abord vous connecter");
 			header("Refresh:0; url=../Sprint/?r=cli/login");
 		} else if($_SESSION['user']->role != "Service vente"){
-			$m->setFlash("Espace du site réservé au membre du service vete");
+			$m->setFlash("Espace du site réservé au membre du service vente");
 			header("Refresh:0; url=../Sprint/");
-		}
+            exit();
+
+        }
 	}
 	if($controller == "SERVICE_COMMUNICATIONController")
 	{
-		if(!isset($_SESSION['user'])) {
-			$c = new T_E_CLIENT_CLIController();
-			$m->setFlash("Veuillez d'abord vous connecter");
-			header("Refresh:0; url=../Sprint/?r=cli/login");
-		} else if($_SESSION['user']->role != "Service communication"){
-			$m = new message();
-			$m->setFlash("Espace du site réservé au membre du service communication");
-			header("Refresh:0; url=../Sprint/");
+            if(!isset($_SESSION['user'])) {
+                $m->setFlash("Veuillez d'abord vous connecter");
+                header("Refresh:0; url=../Sprint/?r=cli/login");
+            } else if($_SESSION['user']->role != "Service communication"){
+                $m = new message();
+                $m->setFlash("Espace du site réservé au membre du service communication");
+                header("Refresh:0; url=../Sprint/");
+                exit();
+        }
 	}
-	}
+    if($controller == "SERVICE_CLIENTController")
+    {
+        if(!isset($_SESSION['user'])) {
+            $m->setFlash("Veuillez d'abord vous connecter");
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+        } else if($_SESSION['user']->role != "Service client"){
+            $m = new message();
+            $m->setFlash("Espace du site réservé au membre du service client");
+            header("Refresh:0; url=../Sprint/");
+            exit();
+
+        }
+    }
 	$c = new $controller();
 	$c->$action();
 

@@ -119,25 +119,4 @@ class SERVICE_VENTEController extends Controller
 		}
         $this->render("addvideo", T_E_JEUVIDEO_JEU::findAll());
 	}
-
-	public function order(){
-
-		if(isset($_POST['date'])){
-			$c = T_E_COMMANDE_COM::findByDate($_POST['date']);
-		}
-		else
-			$c = T_E_COMMANDE_COM::findAll();
-
-		$data = array();
-		foreach($c as $key=>$value){
-			unset($d);
-			$d['commande'] = $value;
-			foreach(T_J_LIGNECOMMANDE_LEC::findAllProductforOneOrder($value->com_id) as $k=>$v){
-				$d['produit'][] = $v;
-			}
-			array_push($data,$d);
-		}
-
-		$this->render("order", $data);
-	}
 }

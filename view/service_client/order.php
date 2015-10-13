@@ -6,7 +6,7 @@
         </ul>
     </div>
     <div class="col-md-9">
-        <form class="form-inline" action="?r=srv/order" method="post" >
+        <form class="form-inline" action="?r=srl/order" method="post" >
             <div id="sandbox-container" class="form-group">
                 <div class="input-group date">
                     <a href="#" class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></a><input type="text" value="<?php if(isset($_POST['date'])) echo $_POST['date'];  ?>" name="date" class="form-control">
@@ -49,7 +49,7 @@
                     </tr>
                 <?php  endforeach; ?>
             </table>
-            <?php if(empty($data)) echo '<p style="text-align:center;">Pas de commande pour cette date</p>'; ?>
+            <?php if(empty($data)) echo '<p style="text-align:center;">Pas de commande pour cette date ('.$_POST['date'].')</p>'; ?>
             <?php foreach($data as $k => $v): ?>
             <div class="modal fade" id="modal<?php echo $k; ?>" tabindex="-1" role="dialog" aria-labelledby="Commande <?php echo $k; ?>">
                 <div class="modal-dialog modal-lg">
