@@ -86,6 +86,7 @@ if (isset(parameters()["r"])) {
 		if(!isset($_SESSION['user'])) {
 			$m->setFlash("Veuillez d'abord vous connecter");
 			header("Refresh:0; url=../Sprint/?r=cli/login");
+			exit();
 		} else if($_SESSION['user']->role != "Service vente"){
 			$m->setFlash("Espace du site réservé au membre du service vente");
 			header("Refresh:0; url=../Sprint/");
@@ -98,6 +99,7 @@ if (isset(parameters()["r"])) {
             if(!isset($_SESSION['user'])) {
                 $m->setFlash("Veuillez d'abord vous connecter");
                 header("Refresh:0; url=../Sprint/?r=cli/login");
+				exit();
             } else if($_SESSION['user']->role != "Service communication"){
                 $m = new message();
                 $m->setFlash("Espace du site réservé au membre du service communication");

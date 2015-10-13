@@ -22,7 +22,7 @@ if(empty($data)){
         $prixTotal = 0;
         foreach ($data as $product) {
             echo "<tr>";
-                echo "<td>".$product->jeu_nom."</td>";
+                echo "<td><a href='#'  data-toggle='modal' data-target='#myModal".$product->jeu_id."'>".$product->jeu_nom."</a></td>";
                 echo "<td>".$product->T_R_EDITEUR_EDI->edi_nom."</td>";
                 echo "<td>".$product->T_R_CONSOLE_CON->con_nom."</td>";
                 echo "<td>".$product->jeu_prixttc." €</td>";
@@ -30,6 +30,35 @@ if(empty($data)){
                 echo '<td><a href="?r=cli/removefromcart&jeu_id='.$product->jeu_id.'" class="btn btn-danger" role="button">Supprimer</a></td>';
             echo "</tr>";
             $prixTotal += $product->jeu_prixttc;
+        ?>
+                <div class="col-md-9">
+                    <div class="modal fade" id="myModal<?php echo $product->jeu_id ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel"><?php echo $product->jeu_nom ?></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">Un jeu de <?php echo $product->T_R_EDITEUR_EDI->edi_nom  ?></div>
+                                        <div class="panel-body">
+                                            <?php
+                                            echo "<p><b>Plateforme : </b>".$product->T_R_CONSOLE_CON->con_nom."</p>";
+                                            echo "<p><b>Paru le : </b>".$product->jeu_dateparution."</p>";
+                                            echo "<div class=''><b>Description : </b>".$product->jeu_description."</div><br/>";
+                                            echo "<p><b>Information légale : </b>".$product->jeu_publiclegal."</p>";
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
         }
         echo "<tr>";
             echo"<td></td>";
