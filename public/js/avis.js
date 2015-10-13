@@ -11,8 +11,8 @@ $(document).ready(function() {
 	  		url: "?r=avi/saveLike",
 	  		data: {avisId : aviID, type : t},
 		    success: function(msg ) {
-		    	$(".like.\\/"+aviID).html('<span class="glyphicon glyphicon-thumbs-up"></span>'+msg.substring(0, msg.indexOf('/'))); 	
-		    	$(".dislike.\\/"+aviID).html('<span class="glyphicon glyphicon-thumbs-down"></span>'+msg.substring(msg.indexOf('/')+1)); 
+		    	$(".like.\\/"+aviID).html('<span class="glyphicon glyphicon-thumbs-up"></span> '+msg.substring(0, msg.indexOf('/'))); 	
+		    	$(".dislike.\\/"+aviID).html('<span class="glyphicon glyphicon-thumbs-down"></span> '+msg.substring(msg.indexOf('/')+1)); 
 			}
 		});
 	});
