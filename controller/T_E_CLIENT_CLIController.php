@@ -20,7 +20,22 @@ class T_E_CLIENT_CLIController extends Controller
                 } else {
                     $_SESSION['user'] = $c;
                     $_SESSION['cart'] = array();
-                    $this->render("index");
+                    if($_SESSION['user']->role == "Service vente"){
+
+                        header("Refresh:0; url=../Sprint/?r=srv");
+                        
+                    } elseif ($_SESSION['user']->role == "Service communication") {
+
+                        header("Refresh:0; url=../Sprint/?r=src");
+
+                    } elseif ($_SESSION['user']->role == "Service client") {
+
+                         header("Refresh:0; url=../Sprint/?r=srl");
+                    } else {
+
+                        header("Refresh:0; url=../Sprint/?r=jeu");
+
+                    }
                 }
 
             } else {

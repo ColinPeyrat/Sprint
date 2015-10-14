@@ -37,4 +37,13 @@ class T_E_JEUVIDEO_JEUController extends Controller
     		$this->render("find");
     	}
     }
+    public function displayById(){
+        if(isset($_GET["jeu_id"])){
+            $idGame = $_GET["jeu_id"];
+            echo $idGame;
+        }
+        else{
+            $this->render("find");
+        }
+    }
 }
