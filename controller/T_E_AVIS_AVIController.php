@@ -3,7 +3,6 @@
 class T_E_AVIS_AVIController extends Controller
 {
 	public function findByGame(){
-        //echo $_SERVER['REQUEST_URI'];
 	    if(isset($_GET["id_game"])){
 	    	$id_game = $_GET["id_game"];
             $data = T_E_AVIS_AVI::findByGame($id_game);
@@ -21,30 +20,36 @@ class T_E_AVIS_AVIController extends Controller
 	public function add(){
         $m = new message();
     	if(isset($_POST["addbtn"]) && $_POST["addbtn"] == "Ajouter"){
-
-            $avi = new T_E_AVIS_AVI();
-            $client = new T_E_CLIENT_CLI($_GET['id_client']);
-            $jeu = new T_E_JEUVIDEO_JEU($_GET['id_game']);
-
-            $avi->__set("T_E_CLIENT_CLI",$client);
-            $avi->__set("T_E_JEUVIDEO_JEU",$jeu);
-            $avi->__set("avi_titre",$_POST["titre"]);
-            $avi->__set("avi_detail",$_POST["detail"]);
-            $avi->__set("avi_note",$_POST["note"]);
-
-            $avi->add();
-            $m->setFlash($client->cli_prenom.", votre avis a bien été déposé.","success");
-            $this->render("displayByGame",T_E_AVIS_AVI::findByGame($jeu->jeu_id));
-    	}
-    	else{
-            if(isset($_SESSION['user']))
-    		  $this->render("add");
-            else {
+            if(empty($_POST["titre"]) || empty($_POST["detail"])){
                 $m = new message();
-                $m->setFlash("Vous devez etre connecté.");
-                header('refresh:0;url=../Sprint/?r=cli/login');
+                $m->setFlash("Tous les champs doivent être remplis."); 
             }
-    	}
+            else {
+
+                $avi = new T_E_AVIS_AVI();
+                $client = new T_E_CLIENT_CLI($_GET['id_client']);
+                $jeu = new T_E_JEUVIDEO_JEU($_GET['id_game']);
+
+                $avi->__set("T_E_CLIENT_CLI",$client);
+                $avi->__set("T_E_JEUVIDEO_JEU",$jeu);
+                $avi->__set("avi_titre",$_POST["titre"]);
+                $avi->__set("avi_detail",$_POST["detail"]);
+                $avi->__set("avi_note",$_POST["note"]);
+
+                $avi->add();
+                $m->setFlash($client->cli_prenom.", votre avis a bien été déposé.","success");
+                $this->render("displayByGame",T_E_AVIS_AVI::findByGame($jeu->jeu_id));
+            }
+        }
+
+                
+        if(isset($_SESSION['user']))
+    	   $this->render("add");
+        else {
+            $m = new message();
+            $m->setFlash("Vous devez etre connecté.");
+            header('refresh:0;url=../Sprint/?r=cli/login');
+        }
     }
 
 	public function signal(){
