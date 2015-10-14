@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".addtocart").click(function(){
-
+        var button = $(this);
         var val = $(this).val();
         $.ajax ({
             method: "GET",
@@ -12,10 +12,10 @@ $(document).ready(function(){
                     if(response == false){
                         $('#errorModal').modal();
                     } else {
+                        button.removeClass();
+                        button.addClass('btn btn-success btn-sm');
+                        button.text('Ajouté !');
                         $('#myModal').modal();
-                        $('#addtocart').removeClass();
-                        $('#addtocart').addClass('btn btn-success btn-sm');
-                        $('#addtocart').text('Ajouté !');
                     }
             },
             error : function(resultat, statut, erreur){

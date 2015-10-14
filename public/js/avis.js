@@ -10,9 +10,9 @@ $(document).ready(function() {
 		    method: "POST",
 	  		url: "?r=avi/saveLike",
 	  		data: {avisId : aviID, type : t},
-		    success: function(msg ) {
-		    	$(".like.\\/"+aviID).html('<span class="glyphicon glyphicon-thumbs-up"></span> '+msg.substring(0, msg.indexOf('/'))); 	
-		    	$(".dislike.\\/"+aviID).html('<span class="glyphicon glyphicon-thumbs-down"></span> '+msg.substring(msg.indexOf('/')+1)); 
+		    success: function(msg) {
+		    	$(".like.\\/"+aviID).html('<span class="text-success glyphicon glyphicon-thumbs-up"></span> '+msg.substring(0, msg.indexOf('/'))); 	
+		    	$(".dislike.\\/"+aviID).html('<span class="text-danger glyphicon glyphicon-thumbs-down"></span> '+msg.substring(msg.indexOf('/')+1)); 
 			}
 		});
 	});

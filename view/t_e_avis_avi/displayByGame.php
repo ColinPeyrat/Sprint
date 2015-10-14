@@ -28,9 +28,9 @@ else{
 	    	echo "<div class='panel-heading'><strong>".$avi->avi_titre."</strong> : ".$star." - <span class='text-capitalize'><a href='?r=cli/viewOne&id_cli=".$avi->T_E_CLIENT_CLI->cli_id."'>".$avi->T_E_CLIENT_CLI->cli_pseudo."</a>	</span> <small>(".$avi->avi_date.")</small><small><div class='pull-right'><a href='?r=avi/signal&id_avi=".$avi->avi_id."'>Signaler ce commentaire comme abusif</a></div></small></div>";
 	    	echo "<div class='panel-body'>".$avi->avi_detail."</div>";
 	    	echo '<a class="btn btn-default like /'.$avi->avi_id.'">
-    			<span class="glyphicon glyphicon-thumbs-up"></span> '.T_J_AVISRECOMMANDE_AVR::getAvisRecommande($avi->avi_id).'</a>';
+    			<span class="text-success glyphicon glyphicon-thumbs-up"></span> '.T_J_AVISRECOMMANDE_AVR::getAvisRecommande($avi->avi_id).'</a>';
     		echo '<a class="btn btn-default dislike /'.$avi->avi_id.'">
-    			<span class="glyphicon glyphicon-thumbs-down"></span> '.T_J_AVISDECONSEILLE_AVD::getAvisDecons($avi->avi_id).'</a>';
+    			<span class="text-danger glyphicon glyphicon-thumbs-down"></span> '.T_J_AVISDECONSEILLE_AVD::getAvisDecons($avi->avi_id).'</a>';
   		echo "</div>";
   	}
  }
