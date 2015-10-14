@@ -40,7 +40,7 @@ class T_E_AVIS_AVIController extends Controller
                 $m->setFlash($client->cli_prenom.", votre avis a bien été déposé.","success");
                 $this->render("displayByGame",T_E_AVIS_AVI::findByGame($jeu->jeu_id));
             }
-        }
+        } else {
 
                 
         if(isset($_SESSION['user']))
@@ -50,6 +50,7 @@ class T_E_AVIS_AVIController extends Controller
             $m->setFlash("Vous devez etre connecté.");
             header('refresh:0;url=../Sprint/?r=cli/login');
         }
+    }
     }
 
 	public function signal(){
