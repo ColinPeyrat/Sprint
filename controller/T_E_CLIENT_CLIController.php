@@ -206,4 +206,25 @@ class T_E_CLIENT_CLIController extends Controller
             $c->render("displayById", T_E_CLIENT_CLI::findById($id_cli));
         }
     }
+
+    public function adresse(){
+        $adresse = new T_E_ADRESSE_ADR();
+        if(isset(parameters()['InputNom']) && isset(parameters()['InputType']) && isset(parameters()['InputRue']) && isset(parameters()['InputComplementRue']) && isset(parameters()['InputCP']) && isset(parameters()['InputVille']) && isset(parameters()['InputPays'])) {
+            $adresse->addAdresse($_SESSION['user']->cli_id,parameters()['InputNom'],parameters()['InputType'],parameters()['InputRue'],parameters()['InputComplementRue'],parameters()['InputCP'],parameters()['InputVille'],parameters()['InputPays']);
+        }
+
+        if(isset(parameters()['putfacturation'])){
+            $adresse = new T_E_ADRESSE_ADR();
+            $adresse->putFacturation($_SESSION['user']->cli_id,parameters()['putfacturation']);
+        }
+
+        if(isset(parameters()['delete'])){
+            $adresse = new T_E_ADRESSE_ADR();
+            $adresse->removeAdresse(parameters()['delete']);
+        }
+
+        $data['adresse'] = $adresse::findByClient($_SESSION['user']->cli_id);
+        $data['pays'] = T_R_PAYS_PAY::findAll();
+        $this->render('adresse',$data);
+    }
 }

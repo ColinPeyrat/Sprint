@@ -17,7 +17,7 @@
         <hr>
         <script type="text/javascript">
                 $('#sandbox-container .input-group.date').datepicker({
-                    format: "yyyy-mm-dd",
+                    format: "dd/mm/yyyy",
                     todayBtn: "linked",
                     language: "fr",
                     orientation: "top auto",
@@ -44,7 +44,7 @@
                             <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_ville ?></td>
                             <td><?php echo $v['commande']->T_E_ADRESSE_ADR->adr_cp ?></td>
                         <?php endif; ?>
-                        <td><?php echo $v['commande']->com_date ?></td>
+                        <td><?php echo date("d/m/Y", strtotime($v['commande']->com_date)) ?></td>
                         <td><a data-toggle="modal" href="#" data-target="#modal<?php echo $k; ?>" >Plus d'information</a></td>
                     </tr>
                 <?php  endforeach; ?>
