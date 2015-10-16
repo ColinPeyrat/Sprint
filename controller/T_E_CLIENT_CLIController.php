@@ -207,11 +207,48 @@ class T_E_CLIENT_CLIController extends Controller
         }
     }
 
-    public function orders(){
-        if(isset($_GET["id_cli"])){
-            $id_cli = $_GET["id_cli"];
-            $this->render("orders", T_E_COMMANDE_COM::findById($id_cli));
+    public function adresse(){
+        $adresse = new T_E_ADRESSE_ADR();
+        if(isset(parameters()['InputNom']) && isset(parameters()['InputType']) && isset(parameters()['InputRue']) && isset(parameters()['InputComplementRue']) && isset(parameters()['InputCP']) && isset(parameters()['InputVille']) && isset(parameters()['InputPays'])) {
+            $adresse->addAdresse($_SESSION['user']->cli_id,parameters()['InputNom'],parameters()['InputType'],parameters()['InputRue'],parameters()['InputComplementRue'],parameters()['InputCP'],parameters()['InputVille'],parameters()['InputPays']);
         }
 
+        if(isset(parameters()['putfacturation'])){
+            $adresse = new T_E_ADRESSE_ADR();
+            $adresse->putFacturation($_SESSION['user']->cli_id,parameters()['putfacturation']);
+        }
+
+        if(isset(parameters()['delete'])){
+            $adresse = new T_E_ADRESSE_ADR();
+            $adresse->removeAdresse(parameters()['delete']);
+        }
+
+        $data['adresse'] = $adresse::findByClient($_SESSION['user']->cli_id);
+        $data['pays'] = T_R_PAYS_PAY::findAll();
+        $this->render('adresse',$data);
+    }
+
+    public function orders(){
+        $m = new message();
+        if(isset($_GET["cli_id"])){
+            $cli_id = $_GET["cli_id"];
+            $c = T_E_COMMANDE_COM::findById($cli_id);
+        }
+        else {
+            $m->setFlash("Vous n'avez aucune commande.","warning");
+            $this->render("orders");
+        }
+
+        $data = array();
+        foreach($c as $key=>$value){
+            unset($d);
+            $d['commande'] = $value;
+            foreach(T_J_LIGNECOMMANDE_LEC::findAllProductforOneOrder($value->com_id) as $k=>$v){
+                $d['produit'][] = $v;
+            }
+            array_push($data,$d);
+        }
+
+        $this->render("orders", $data);
     }
 }

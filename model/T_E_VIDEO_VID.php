@@ -10,7 +10,7 @@ class T_E_VIDEO_VID extends Model
         $st = db()->prepare("insert into t_e_video_vid(jeu_id,vid_url) values(".$jeu_id.",'".$vid_url."')");
         $st->execute();
         $m = new message();
-        $m->setFlash("Upload rÈussi","success");
+        $m->setFlash("Upload r√©ussi","success");
     }
 
     public static function findByGame($id_game){

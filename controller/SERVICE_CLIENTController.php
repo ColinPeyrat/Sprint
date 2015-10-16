@@ -7,8 +7,8 @@ class SERVICE_CLIENTController extends Controller
 
     public function order(){
 
-        if(isset($_POST['date'])){
-            $c = T_E_COMMANDE_COM::findByDate($_POST['date']);
+        if(isset($_POST['date']) && !empty($_POST['date'])){
+            $c = T_E_COMMANDE_COM::findByDate(date("Y-d-m", strtotime($_POST['date'])));
         }
         else
             $c = T_E_COMMANDE_COM::findAll();

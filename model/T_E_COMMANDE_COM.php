@@ -20,7 +20,15 @@ class T_E_COMMANDE_COM extends Model
         return $commande;
     }
 
-    public static function ordersByClient(){
-        echo "ok classe";
+    public static function findById($cli_id){
+        $class = get_called_class();
+
+        $list = array();
+        foreach(T_E_COMMANDE_COM::findAll() as $row){
+            if($row->_T_E_CLIENT_CLI->cli_id == $cli_id){
+                $list[] = new $class($row->com_id);
+            }
+        }
+        return $list;
     }
 }

@@ -14,8 +14,6 @@ class T_E_AVIS_AVI extends Model
     public static function findByGame($id_game){
         $m = new message();
     	$class = get_called_class();
-        $table = strtolower($class);
-        $idtable = substr($table,-3)."_id";
 
         $list = array();
         $empty = null;
