@@ -34,10 +34,10 @@
                   if(array_key_exists('vid_url',$v)): ?>
                       <div class="row">
                           <?php foreach($v['vid_url'] as $y => $z): ?>
-                              <div class="col-xs-6 col-md-3">
-                                  <a href="#" class="thumbnail">
-                                      <img src="<?php echo $z; ?>" alt="<?php echo $v['nom']; ?>">
-                                  </a>
+                              <div class="col-xs-6 col-md-4">
+                                  <div class="embed-responsive embed-responsive-16by9">
+                                      <iframe width="560" height="315" src="<?php echo $z; ?>" frameborder="0" allowfullscreen></iframe>
+                                  </div>
                               </div>
                           <?php endforeach; ?>
                       </div>

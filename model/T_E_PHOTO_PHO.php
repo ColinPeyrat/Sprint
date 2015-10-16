@@ -6,6 +6,12 @@ class T_E_PHOTO_PHO extends Model
     protected $_T_E_JEUVIDEO_JEU;
     protected $_pho_url;
 
+    public static function addPhoto($jeu_id,$pho_url){
+        $st = db()->prepare("insert into t_e_photo_pho(jeu_id,pho_url) values(".$jeu_id.",'".$pho_url."')");
+        $st->execute();
+        $m = new message();
+        $m->setFlash("Upload réussi","success");
+    }
 
     public static function findByGame($id_game){
     	$class = get_called_class();

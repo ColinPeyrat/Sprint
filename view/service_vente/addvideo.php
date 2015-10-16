@@ -18,9 +18,9 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="InputFile">Vidéo à ajouter</label>
-        <p class="help-block">Formats acceptés: avi, mp4, wma</p>
-        <input name="input" type="file" id="InputFile">
+        <label for="InputFile">Url</label>
+        <input name="input" class="form-control" type="text" id="Input" >
+        <p class="help-block">Site acceptés: youtube</p>
       </div>
       <button type="submit" class="btn btn-primary">Ajouter une video</button>
     </form>
