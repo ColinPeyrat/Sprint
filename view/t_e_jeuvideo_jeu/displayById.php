@@ -24,6 +24,7 @@ if(!(empty($data[3]))){
 
 
 }
+T_E_CLIENT_CLI::displayCartModal();
 ?>
         <div class="thumbnail">
             <div class="row">
@@ -33,8 +34,13 @@ if(!(empty($data[3]))){
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
                   <!-- Indicators -->
                   <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                  <?php for ($i=0; $i < count($photos); $i++) {?>
+                        <?php if($i == 0) {?>
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <?php }else {?>
+                            <li data-target="#myCarousel" data-slide-to=<?=$i?>></li>
+                    <?php } ?>
+                 <?php } ?>
                   </ol>
 
                 <div class="carousel-inner" role="listbox">
@@ -72,6 +78,8 @@ if(!(empty($data[3]))){
                 <h4><?= $game->jeu_nom ?>
                 </h4>
                 <p><?php if(!empty($game->jeu_description)){echo $game->jeu_description;} else {echo "<h5>Pas de description pour ce jeu</h5>";} ?></p>
+                <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-primary btn addtocart pull-right">Ajouter au panier</button>
+
             </div>
         </div>
     </div>
@@ -88,17 +96,22 @@ if(!(empty($data[3]))){
             <?php } ?>
             <div class="ratings">
                 <p class="pull-right"><?= $nbAdvice ?> avi(s)</p>
-                <p>
-                    Note moyenne : 
-                    <?= round($adviceGlobal,1) ?> /5
+                <p>Note moyenne :
+                    <?php if($nbAdvice != 0) { 
+                           echo round($adviceGlobal,1)." / 5";
+                        } else {
+                            echo "aucun avis";
+                        }
+                    ?>
                 </p>
+                
             </div>
         </div>
-
+        <?php if(count($advices)!= 0){ ?>
         <div class="well">
 
             <div class="text-right">
-                <a class="btn btn-success">Deposer un avis</a>
+                <?php echo "<a href='?r=avi/add&id_game=".$game->jeu_id."' ><button type='button' class='btn btn-primary'>Deposer un avis</button></a>"; ?>
             </div>
 
             <hr>
@@ -119,7 +132,7 @@ if(!(empty($data[3]))){
                 ?>
                     <div class="row">
                     <div class="col-md-12">
-                        <?php echo $star."  ".$advice->T_E_CLIENT_CLI->cli_pseudo ?>
+                        <?php echo $star."  "."<a href='?r=cli/viewOne&id_cli=".$advice->T_E_CLIENT_CLI->cli_id."'>".$advice->T_E_CLIENT_CLI->cli_pseudo."</a>" ?>
                         
                         <span class="pull-right"><?= date("d/m/Y", strtotime($advice->avi_date)) ?></span>
                         <p><?= $advice->avi_detail ?></p>
@@ -127,6 +140,7 @@ if(!(empty($data[3]))){
                 </div>
                 <hr>
                 <?php } ?>
+            <?php } ?>
             <?php } ?>
 
         </div>  
