@@ -1,9 +1,9 @@
-<h2>Mes Adresse</h2>
+<h2>Mes Adresses</h2>
 <div class="row">
     <div class="col-md-3">
         <ul class="nav nav-pills nav-stacked">
             <li role="presentation"><a href="./?r=cli">Mes informations</a></li>
-            <li role="presentation"><a href="./?r=cli/adresse">Mes Adresse</a></li>
+            <li role="presentation"><a href="./?r=cli/adresse">Mes Adresses</a></li>
         </ul>
     </div>
     <div class="col-md-9">
@@ -64,8 +64,7 @@
                         </address>
                     </div>
                     <div class="panel-footer">
-                        <a href="" type="button" class="btn btn-primary">Modifier</a>
-                        <a href="./?r=cli/adresse&delete=<?php echo $value->adr_id ?>" type="button" class="btn btn-danger">Supprimer</a>
+                        <a href="./?r=cli/editadresse&adr_id=<?php echo $value->adr_id ?>" type="button" class="btn btn-primary">Modifier</a>
                     </div>
                 </div>
             <?php endif; ?>
@@ -82,7 +81,7 @@
                         </address>
                     </div>
                     <div class="panel-footer">
-                        <a href="" type="button" class="btn btn-primary">Modifier</a>
+                        <a href="./?r=cli/editadresse&adr_id=<?php echo $value->adr_id ?>" type="button" class="btn btn-primary">Modifier</a>
                         <a href="./?r=cli/adresse&delete=<?php echo $value->adr_id ?>" type="button" class="btn btn-danger">Supprimer</a>
                     </div>
                 </div>

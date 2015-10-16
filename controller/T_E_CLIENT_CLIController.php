@@ -250,5 +250,15 @@ class T_E_CLIENT_CLIController extends Controller
         }
 
         $this->render("orders", $data);
+
+    public function editAdresse(){
+        $adresse = new T_E_ADRESSE_ADR();
+        if(isset(parameters()['InputId']) && isset(parameters()['InputNom']) && isset(parameters()['InputRue']) && isset(parameters()['InputComplementRue']) && isset(parameters()['InputCP']) && isset(parameters()['InputVille']) && isset(parameters()['InputPays'])) {
+            $adresse->editAdresse(parameters()['InputId'],parameters()['InputNom'],parameters()['InputRue'],parameters()['InputComplementRue'],parameters()['InputCP'],parameters()['InputVille'],parameters()['InputPays']);
+        }
+
+        $data['adresse'] = new T_E_ADRESSE_ADR(parameters()['adr_id']);
+        $data['pays'] = T_R_PAYS_PAY::findAll();
+        $this->render('editadresse',$data);
     }
 }

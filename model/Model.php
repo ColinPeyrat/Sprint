@@ -101,13 +101,14 @@ class Model {
                 $idtable = substr($table,-3)."_id";
 				$id = $idtable;
 				if (isset($value->$id)) {
-					$st = db()->prepare("update $table set id$fieldName=:val where $idtable=:id");
-					$id = substr($id, 1);
+					$fieldName = $fieldName.'_id';
+					$st = db()->prepare("update $table set $fieldName=:val where $idtable=:id");
+
+					echo "update $table set $fieldName=:val where $idtable=:id";
 					$st->bindValue(":val", $value->$id);
 				} else {
 					$st = db()->prepare("update $table set $fieldName=:val where $idtable=:id");
 					$st->bindValue(":val", $value);
-
 				}
 				$id = $idtable;
 				$st->bindValue(":id", $this->$id);
