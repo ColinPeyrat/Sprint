@@ -41,7 +41,7 @@ class T_E_ADRESSE_ADR extends Model
             if($v->adr_id != $idfacturation)
                 $adr->__set('adr_type','Livraison');
             else
-                $adr->__set('adr_longitude','Facturation');
+                $adr->__set('adr_type','Facturation');
         }
     }
 
@@ -95,8 +95,6 @@ class T_E_ADRESSE_ADR extends Model
             $adr->__set('adr_ville',$adr_ville);
             $adr->setPays($pay_id);
             $m->setFlash("L'addresse à été modifier","success");
-
-            $adr->setLatLong($adr_id);
 
             unset($_POST['InputId']);
             unset($_POST['InputNom']);
