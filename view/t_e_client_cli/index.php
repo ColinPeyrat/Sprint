@@ -6,7 +6,7 @@ if(isset($_SESSION['user'])) {
         <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation"><a href="./?r=cli">Mes informations</a></li>
-                <li role="presentation"><a href="./?r=cli/adresse">Mes Adresse</a></li>
+                <li role="presentation"><a href="./?r=cli/adresse">Mes Adresses</a></li>
             </ul>
         </div>
         <div class="col-md-9">
