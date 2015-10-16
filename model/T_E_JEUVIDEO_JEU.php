@@ -16,6 +16,7 @@ class T_E_JEUVIDEO_JEU extends Model
     protected $_photo;
 
 
+
     public static function findBySelection($id_console){
         $class = get_called_class();
         $table = strtolower($class);

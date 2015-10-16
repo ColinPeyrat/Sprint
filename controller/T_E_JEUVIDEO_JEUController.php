@@ -19,8 +19,7 @@ class T_E_JEUVIDEO_JEUController extends Controller
             $m = new message();
             $m->setFlash("Aucun résuiltat pour cette recherche.","warning");
             $this->render("index", [$games, T_R_RAYON_RAY::findall()]);
-        }
-			
+        }	
     }
 
     public function findBySelection(){
@@ -40,7 +39,12 @@ class T_E_JEUVIDEO_JEUController extends Controller
     public function displayById(){
         if(isset($_GET["jeu_id"])){
             $idGame = $_GET["jeu_id"];
-            echo $idGame;
+            $idGame;
+            $game = new T_E_JEUVIDEO_JEU($idGame);
+            $photo = T_E_PHOTO_PHO::findByGame($idGame);
+            $movie = T_E_VIDEO_VID::findByGame($idGame);
+            $advice = T_E_AVIS_AVI::findByGame($idGame);
+            $this->render('displayById',array($game,$photo,$movie,$advice));
         }
         else{
             $this->render("find");
