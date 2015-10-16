@@ -19,4 +19,8 @@ class T_E_COMMANDE_COM extends Model
         }
         return $commande;
     }
+
+    public static function ordersByClient(){
+        echo "ok classe";
+    }
 }

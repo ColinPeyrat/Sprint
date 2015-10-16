@@ -206,4 +206,12 @@ class T_E_CLIENT_CLIController extends Controller
             $c->render("displayById", T_E_CLIENT_CLI::findById($id_cli));
         }
     }
+
+    public function orders(){
+        if(isset($_GET["id_cli"])){
+            $id_cli = $_GET["id_cli"];
+            $this->render("orders", T_E_COMMANDE_COM::findById($id_cli));
+        }
+
+    }
 }

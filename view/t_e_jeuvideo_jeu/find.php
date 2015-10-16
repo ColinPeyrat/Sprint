@@ -72,8 +72,9 @@
 				foreach($data as $jeu){
 				    echo '<div class="col-sm-3 col-lg-3 col-md-3">';
 			            echo '<div class="thumbnail">';
-			                if(isset($jeu->photo[0]))
-								echo "<img src='".$jeu->photo."'>";
+			                if(isset($jeu->photo[0])){
+							echo "<img src='".$jeu->photo."'>";
+						} else echo "<img src='public/img/default.png'>";
 			                echo '<div class="caption">';
 				                echo '<h4><a href="?r=jeu/displayById&jeu_id='.$jeu->jeu_id.'">'.$jeu->jeu_nom.'</a>';
 				                echo '</h4>';
