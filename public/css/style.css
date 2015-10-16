@@ -117,3 +117,19 @@ body {
 a.like, a.dislike{
     margin:4px;
 }
+
+/*STYLE OF CARROUSSEL
+--------------------------------------------*/
+div.carousel{
+    width: 70%; /* for example */
+    margin: auto;
+}
+
+.carousel-inner > .item > img, 
+.carousel-inner > .item > a > img{
+width: 100%;  use this, or not  
+margin: auto;
+}
+.carousel-control.left, .carousel-control.right {
+    background-image: none
+}

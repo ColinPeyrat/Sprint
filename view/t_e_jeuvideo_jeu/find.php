@@ -75,7 +75,7 @@
 			                if(isset($jeu->photo[0]))
 								echo "<img src='".$jeu->photo."'>";
 			                echo '<div class="caption">';
-				                echo '<h4><a href="?r=jeu/displayById&jeu_id="'.$jeu->jeu_id.'">'.$jeu->jeu_nom.'</a>';
+				                echo '<h4><a href="?r=jeu/displayById&jeu_id='.$jeu->jeu_id.'">'.$jeu->jeu_nom.'</a>';
 				                echo '</h4>';
 				                echo '<p>Editeur : '.$jeu->T_R_EDITEUR_EDI->edi_nom.'<br/>Console : '.$jeu->T_R_CONSOLE_CON->con_nom.'</p>';
 
