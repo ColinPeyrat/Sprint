@@ -269,7 +269,7 @@ class T_E_CLIENT_CLIController extends Controller
 
     public function orders()
     {
-        $data = null;
+        $data = array();
         if(isset($_SESSION['user'])):
             $m = new message();
 
