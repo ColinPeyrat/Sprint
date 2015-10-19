@@ -3,6 +3,31 @@
 
 class T_E_CLIENT_CLIController extends Controller
 {
+     public function relay(){
+        if(!isset($_SESSION['user'])){
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté');
+        } else {
+            $this->render("relay",$_SESSION['user']->cli_id);
+        }
+    }
+    public static function getAllAddresse(){
+        if(isset($_GET['cli_id'])){
+            $idClient = $_GET['cli_id'];
+            $client = new T_E_CLIENT_CLI($idClient);
+            $allAdress = T_E_ADRESSE_ADR::findByClient($idClient);
+            foreach ($allAdress as $key => $addresse) {
+                if($addresse->adr_type == "Facturation"){
+                    $primaryAdress = $addresse;
+                }
+            }
+            $coordonate = array('latitude' => $primaryAdress->adr_latitude,'longitude' => $primaryAdress->adr_longitude,'nom' => $primaryAdress->adr_nom);
+            echo json_encode($coordonate);
+        }
+
+
+    }
     public function login(){
         if(isset($_SESSION['user']) && $_SESSION['user']->connected)
             $this->render("index");
