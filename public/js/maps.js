@@ -53,14 +53,14 @@ function addMarker(){
   }
   $(document).ready(function() {
         var iconHome = {
-        url: "public/img/home2.png",
-        anchor: new google.maps.Point(0,49)
+        url: "public/img/home4.png",
+        anchor: new google.maps.Point(8,0)
       };
         var center = $.ajax ({
         method: "GET",
         dataType: "json",
         url: "?r=cli/getFactureAdresse",
-        data: {cli_id: 1},
+        data: {cli_id: iduser},
         success: function(response) {
             var center = {lat:parseFloat(response.latitude),lng:parseFloat(response.longitude)};
             initialize(center);
