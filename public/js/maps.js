@@ -5,58 +5,84 @@ console.log(iduser);
 
 var map;
 var home;
-  function initialize() {
-    var mapOptions = {
-      center: bangalore,
-      zoom: 7,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById("googleMap"),
-        mapOptions);
-  }
 
 function addMarker(){
-   $.getJSON("?r=cli/getAllAddresse&cli_id=1", function(json) {
-            var latLng = new google.maps.LatLng(json.latitude, json.longitude ); 
-            // Creating a marker and putting it on the map
-            var marker = new google.maps.Marker({
-                position: latLng
+   $.getJSON("?r=cli/getAllAddresse", function(json) {
+        $.each(json, function(i, value) {
 
-            });
+                var LatLng = new google.maps.LatLng(value.latitude, value.longitude);
+                var marker = new google.maps.Marker({
+                position: LatLng,
+                      animation: google.maps.Animation.DROP,
+
+                map: map,
+                title: 'Hello World!',
+                });
                 var infowindow = new google.maps.InfoWindow({
-              content: json.nom
-            });
-            marker.addListener('click', function() {
-              infowindow.open(map, marker);
-            });
-            marker.setMap(map);
-          })
-  }
-  function initialize() {
+                  content: '<h5>'+value.nom+'</h5></br>'+value.addresse+'<br/>'+value.ville+'<br/>'+value.cp
+                });
+                marker.addListener('click', function() {
+                  infowindow.open(map, marker);
+                });
+              
+    
 
-      var center = $.ajax ({
-            method: "GET",
-            dataType: "json",
-            url: "?r=cli/getAllAddresse",
-            data: {cli_id: 1},
-            success: function(response) {
-                  initialize(response);
-              }     
-            });
-    console.log(center)
-    var center = { lat: 12.97, lng: 77.59 };
+        });
+        // $.each(json,function(i,o){
+        //     var text = o.nom;
+        //     var pos = {lat:parseFloat(o.latitude),lng:parseFloat(o.longitude)};
+        //      var marker = new google.maps.Marker({
+        //         position: latLng,
+        //         map: map,
+        //         title: data.title
+        //       });
+        //     marker.setMap(map);
+        // });
+    });
+  }
+
+  function initialize(center) {
+    var center = center;
     var mapOptions = {
       center: center,  
-      zoom: 7,
+      zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     map = new google.maps.Map(document.getElementById("googleMap"),
         mapOptions);
   }
   $(document).ready(function() {
-        initialize();
-        addMarker();
+        var iconHome = {
+        url: "public/img/home2.png",
+        anchor: new google.maps.Point(0,49)
+      };
+        var center = $.ajax ({
+        method: "GET",
+        dataType: "json",
+        url: "?r=cli/getFactureAdresse",
+        data: {cli_id: 1},
+        success: function(response) {
+            var center = {lat:parseFloat(response.latitude),lng:parseFloat(response.longitude)};
+            initialize(center);
+            var marker = new google.maps.Marker({
+              position: center,
+              map: map,
+                    animation: google.maps.Animation.DROP,
+
+              title: 'Votre adresse de facturation',
+              icon : iconHome,
+            });
+            var infowindow = new google.maps.InfoWindow({
+              content: response.nom
+            });
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+
+          }     
         });
+        addMarker();
+    });
 
 
 // function initialize(responseArray)

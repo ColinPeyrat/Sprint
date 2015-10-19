@@ -12,7 +12,7 @@ class T_E_CLIENT_CLIController extends Controller
             $this->render("relay",$_SESSION['user']->cli_id);
         }
     }
-    public static function getAllAddresse(){
+    public static function getFactureAdresse(){
         if(isset($_GET['cli_id'])){
             $idClient = $_GET['cli_id'];
             $client = new T_E_CLIENT_CLI($idClient);
@@ -25,6 +25,17 @@ class T_E_CLIENT_CLIController extends Controller
             $coordonate = array('latitude' => $primaryAdress->adr_latitude,'longitude' => $primaryAdress->adr_longitude,'nom' => $primaryAdress->adr_nom);
             echo json_encode($coordonate);
         }
+
+
+    }
+     public static function getAllAddresse(){
+            $allRelay = T_E_RELAIS_REL::findAll();
+            $relays = array();
+            foreach ($allRelay as $key => $relay) {
+                $relays[] = array('latitude' => $relay->rel_latitude,'longitude' => $relay->rel_longitude, 'nom' => $relay->rel_nom,'addresse' => $relay->rel_rue,'ville' => $relay->rel_ville,'cp' => $relay->rel_cp );
+            }
+            echo json_encode($relays);
+                
 
 
     }
