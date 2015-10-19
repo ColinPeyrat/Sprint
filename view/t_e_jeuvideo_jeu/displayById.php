@@ -77,7 +77,7 @@ T_E_CLIENT_CLI::displayCartModal();
                 <h4 class="pull-right"><?= $game->jeu_prixttc ?> €</h4>
                 <h4><?= $game->jeu_nom ?>
                 </h4>
-                <p><?php if(!empty($game->jeu_description)){echo $game->jeu_description;} else {echo "<h5>Pas de description pour ce jeu</h5>";} ?></p>
+                <p><?php if($game->jeu_description != null){echo $game->jeu_description;} else {echo "<h5>Pas de description pour ce jeu</h5>";} ?></p>
                 <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-primary btn addtocart pull-right">Ajouter au panier</button>
 
             </div>
@@ -86,7 +86,8 @@ T_E_CLIENT_CLI::displayCartModal();
             <?php if(!empty($movie)){ ?>
             <hr>
             <div class="row">
-             <div class="col-md-8 col-md-offset-2">
+                  <div class="col-md-6 col-md-offset-3">
+
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item" src="<?= $movie->vid_url ?>"></iframe>
                 </div>
@@ -107,7 +108,6 @@ T_E_CLIENT_CLI::displayCartModal();
                 
             </div>
         </div>
-        <?php if(count($advices)!= 0){ ?>
         <div class="well">
 
             <div class="text-right">
@@ -115,6 +115,7 @@ T_E_CLIENT_CLI::displayCartModal();
             </div>
 
             <hr>
+             <?php if(count($advices)!= 0){ ?>
             <?php if(!empty($advices)) { ?>
                 <?php foreach ($advices as $key => $advice){ ?>
                 <?php
