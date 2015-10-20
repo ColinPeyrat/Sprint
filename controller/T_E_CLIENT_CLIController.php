@@ -250,6 +250,7 @@ class T_E_CLIENT_CLIController extends Controller
         }
 
         $this->render("orders", $data);
+    }
 
     public function editAdresse(){
         $adresse = new T_E_ADRESSE_ADR();
