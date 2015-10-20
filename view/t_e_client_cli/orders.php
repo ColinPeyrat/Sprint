@@ -1,7 +1,16 @@
+<?php if(isset($_SESSION['user'])): ?>
 <link rel="stylesheet" href="public/css/style.css">
-
 <h2> Mes commandes </h2>
-<div class="table-responsive">
+<div class="row">
+    <div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="./?r=cli">Mes informations</a></li>
+            <li role="presentation"><a href="./?r=cli/adresse">Mes Adresses</a></li>
+            <li role="presentation"><a href="./?r=cli/orders" >Mes commandes</a><li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="table-responsive">
             <table class="table table-striped">
                 <tr>
                     <th>Nom client</th>
@@ -25,7 +34,7 @@
                     </tr>
                 <?php  endforeach; ?>
             </table>
-            <?php if(empty($data)) echo '<p style="text-align:center;">Pas de commande pour cette date ('.$_POST['date'].')</p>'; ?>
+            <?php if($data != array()) echo '<p style="text-align:center;">Pas de commande pour cette date ('.$_POST['date'].')</p>'; ?>
             <?php foreach($data as $k => $v): ?>
             <div class="modal fade" id="modal<?php echo $k; ?>" tabindex="-1" role="dialog" aria-labelledby="Commande <?php echo $k; ?>">
                 <div class="modal-dialog modal-lg">
@@ -129,64 +138,69 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Pays</td>
-                                                            <td><?php echo $v['commande']->T_E_ADRESSE_ADR->T_R_PAYS_PAY->pay_nom ?></td>
-                                                        </tr>
-                                                    <?php endif; ?>
-                                                </table>
+                                                                <td><?php echo $v['commande']->T_E_ADRESSE_ADR->T_R_PAYS_PAY->pay_nom ?></td>
+                                                            </tr>
+                                                        <?php endif; ?>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12" >
-                                    <div class="panel panel-primary">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Produit commandé</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tr>
-                                                        <td>Nom Produit</td>
-                                                        <td>Editeur</td>
-                                                        <td>Console</td>
-                                                        <td>Quantité</td>
-                                                        <td>Prix Unitaire</td>
-                                                        <td>Prix total</td>
-                                                    </tr>
-                                                    <?php $prixtotal = 0;
-                                                    foreach($v['produit'] as $key => $value): ?>
+                                <div class="row">
+                                    <div class="col-md-12" >
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading">
+                                                <h3 class="panel-title">Produit commandé</h3>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="table-responsive">
+                                                    <table class="table">
                                                         <tr>
-                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->jeu_nom ?></td>
-                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->T_R_EDITEUR_EDI->edi_nom ?></td>
-                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->T_R_CONSOLE_CON->con_nom ?></td>
-                                                            <td><?php echo $value->lec_quantite ?></td>
-                                                            <td><?php echo $value->T_E_JEUVIDEO_JEU->jeu_prixttc ?> €</td>
-                                                            <td><?php $prixtotal += ($value->T_E_JEUVIDEO_JEU->jeu_prixttc*$value->lec_quantite); echo ($value->T_E_JEUVIDEO_JEU->jeu_prixttc*$value->lec_quantite) ?> €</td>
+                                                            <td>Nom Produit</td>
+                                                            <td>Editeur</td>
+                                                            <td>Console</td>
+                                                            <td>Quantité</td>
+                                                            <td>Prix Unitaire</td>
+                                                            <td>Prix total</td>
                                                         </tr>
-                                                    <?php endforeach ?>
-                                                    <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><strong>TOTAL</strong></td>
-                                                        <td><strong><?php echo $prixtotal ?> €</strong></td>
-                                                    </tr>
-                                                </table>
+                                                        <?php $prixtotal = 0;
+                                                        foreach($v['produit'] as $key => $value): ?>
+                                                            <tr>
+                                                                <td><?php echo $value->T_E_JEUVIDEO_JEU->jeu_nom ?></td>
+                                                                <td><?php echo $value->T_E_JEUVIDEO_JEU->T_R_EDITEUR_EDI->edi_nom ?></td>
+                                                                <td><?php echo $value->T_E_JEUVIDEO_JEU->T_R_CONSOLE_CON->con_nom ?></td>
+                                                                <td><?php echo $value->lec_quantite ?></td>
+                                                                <td><?php echo $value->T_E_JEUVIDEO_JEU->jeu_prixttc ?> €</td>
+                                                                <td><?php $prixtotal += ($value->T_E_JEUVIDEO_JEU->jeu_prixttc*$value->lec_quantite); echo ($value->T_E_JEUVIDEO_JEU->jeu_prixttc*$value->lec_quantite) ?> €</td>
+                                                            </tr>
+                                                        <?php endforeach ?>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td><strong>TOTAL</strong></td>
+                                                            <td><strong><?php echo $prixtotal ?> €</strong></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <?php  endforeach; ?>
             </div>
-            <?php  endforeach; ?>
         </div>
- <script type="text/javascript" src="public/js/avis.js"></script>
+    </div>
+     <script type="text/javascript" src="public/js/avis.js"></script>
+<?php else: ?>
+    <a href="?r=cli/login">se connecter</a>
+<?php endif; ?>

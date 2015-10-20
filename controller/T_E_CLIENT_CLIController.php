@@ -3,6 +3,42 @@
 
 class T_E_CLIENT_CLIController extends Controller
 {
+     public function relay(){
+        if(!isset($_SESSION['user'])){
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté');
+        } else {
+            $this->render("relay",$_SESSION['user']->cli_id);
+        }
+    }
+    public static function getFactureAdresse(){
+        if(isset($_GET['cli_id'])){
+            $idClient = $_GET['cli_id'];
+            $client = new T_E_CLIENT_CLI($idClient);
+            $allAdress = T_E_ADRESSE_ADR::findByClient($idClient);
+            foreach ($allAdress as $key => $addresse) {
+                if($addresse->adr_type == "Facturation"){
+                    $primaryAdress = $addresse;
+                }
+            }
+            $coordonate = array('latitude' => $primaryAdress->adr_latitude,'longitude' => $primaryAdress->adr_longitude,'nom' => $primaryAdress->adr_nom);
+            echo json_encode($coordonate);
+        }
+
+
+    }
+     public static function getAllAddresse(){
+            $allRelay = T_E_RELAIS_REL::findAll();
+            $relays = array();
+            foreach ($allRelay as $key => $relay) {
+                $relays[] = array('latitude' => $relay->rel_latitude,'longitude' => $relay->rel_longitude, 'nom' => $relay->rel_nom,'addresse' => $relay->rel_rue,'ville' => $relay->rel_ville,'cp' => $relay->rel_cp );
+            }
+            echo json_encode($relays);
+                
+
+
+    }
     public function login(){
         if(isset($_SESSION['user']) && $_SESSION['user']->connected)
             $this->render("index");
@@ -208,47 +244,53 @@ class T_E_CLIENT_CLIController extends Controller
     }
 
     public function adresse(){
-        $adresse = new T_E_ADRESSE_ADR();
-        if(isset(parameters()['InputNom']) && isset(parameters()['InputType']) && isset(parameters()['InputRue']) && isset(parameters()['InputComplementRue']) && isset(parameters()['InputCP']) && isset(parameters()['InputVille']) && isset(parameters()['InputPays'])) {
-            $adresse->addAdresse($_SESSION['user']->cli_id,parameters()['InputNom'],parameters()['InputType'],parameters()['InputRue'],parameters()['InputComplementRue'],parameters()['InputCP'],parameters()['InputVille'],parameters()['InputPays']);
-        }
-
-        if(isset(parameters()['putfacturation'])){
+        $data = null;
+        if(isset($_SESSION['user'])):
             $adresse = new T_E_ADRESSE_ADR();
-            $adresse->putFacturation($_SESSION['user']->cli_id,parameters()['putfacturation']);
-        }
+            if(isset(parameters()['InputNom']) && isset(parameters()['InputType']) && isset(parameters()['InputRue']) && isset(parameters()['InputComplementRue']) && isset(parameters()['InputCP']) && isset(parameters()['InputVille']) && isset(parameters()['InputPays'])) {
+                $adresse->addAdresse($_SESSION['user']->cli_id,parameters()['InputNom'],parameters()['InputType'],parameters()['InputRue'],parameters()['InputComplementRue'],parameters()['InputCP'],parameters()['InputVille'],parameters()['InputPays']);
+            }
 
-        if(isset(parameters()['delete'])){
-            $adresse = new T_E_ADRESSE_ADR();
-            $adresse->removeAdresse(parameters()['delete']);
-        }
+            if(isset(parameters()['putfacturation'])){
+                $adresse = new T_E_ADRESSE_ADR();
+                $adresse->putFacturation($_SESSION['user']->cli_id,parameters()['putfacturation']);
+            }
 
-        $data['adresse'] = $adresse::findByClient($_SESSION['user']->cli_id);
-        $data['pays'] = T_R_PAYS_PAY::findAll();
+            if(isset(parameters()['delete'])){
+                $adresse = new T_E_ADRESSE_ADR();
+                $adresse->removeAdresse(parameters()['delete']);
+            }
+
+            $data['adresse'] = $adresse::findByClient($_SESSION['user']->cli_id);
+            $data['pays'] = T_R_PAYS_PAY::findAll();
+        endif;
         $this->render('adresse',$data);
     }
 
-    public function orders(){
-        $m = new message();
-        if(isset($_GET["cli_id"])){
-            $cli_id = $_GET["cli_id"];
-            $c = T_E_COMMANDE_COM::findById($cli_id);
-        }
-        else {
-            $m->setFlash("Vous n'avez aucune commande.","warning");
-            $this->render("orders");
-        }
-
+    public function orders()
+    {
         $data = array();
-        foreach($c as $key=>$value){
-            unset($d);
-            $d['commande'] = $value;
-            foreach(T_J_LIGNECOMMANDE_LEC::findAllProductforOneOrder($value->com_id) as $k=>$v){
-                $d['produit'][] = $v;
-            }
-            array_push($data,$d);
-        }
+        if(isset($_SESSION['user'])):
+            $m = new message();
 
+            $cli_id = $_SESSION['user']->cli_id;
+            $c = T_E_COMMANDE_COM::findById($cli_id);
+
+            if(count($c) < 1){
+                $m->setFlash("Vous n'avez aucune commande.", "warning");
+            }
+            else{
+                $data = array();
+                foreach ($c as $key => $value) {
+                    unset($d);
+                    $d['commande'] = $value;
+                    foreach (T_J_LIGNECOMMANDE_LEC::findAllProductforOneOrder($value->com_id) as $k => $v) {
+                        $d['produit'][] = $v;
+                    }
+                    array_push($data, $d);
+                }
+            }
+        endif;
         $this->render("orders", $data);
     }
 

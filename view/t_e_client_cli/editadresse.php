@@ -4,6 +4,7 @@
         <ul class="nav nav-pills nav-stacked">
             <li role="presentation"><a href="./?r=cli">Mes informations</a></li>
             <li role="presentation"><a href="./?r=cli/adresse">Mes Adresses</a></li>
+            <li role="presentation"><a href="./?r=cli/orders" >Mes commandes</a><li>
         </ul>
     </div>
     <div class="col-md-9">
