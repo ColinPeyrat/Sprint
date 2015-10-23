@@ -45,6 +45,7 @@
 
                         echo '</div>';
                         echo '<div class="ratings">';
+                        	?><button type="button" value="<?= $jeu->jeu_id ?>" class="btn btn-default addtofav"><?php if(T_E_CLIENT_CLI::isFav($jeu->jeu_id) == true) {echo "<span class='glyphicon glyphicon-star starfav'></span>";} else {echo "<span class='glyphicon glyphicon-star'></span>"; }?></button><?php
 							echo '<button type="button" value="'.$jeu->jeu_id.'" class="btn btn-primary btn-sm addtocart">Ajouter au panier</button>';
 							echo "<p class='pull-right'><a href='?r=avi/findByGame&id_game=".$jeu->jeu_id."'> Avis </a><</p>";
                             echo '<p><h4>'.$jeu->jeu_prixttc.'€</h4><p>';

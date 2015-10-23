@@ -13,7 +13,7 @@ $(document).ready(function(){
                         $('#errorModal').modal();
                     } else {
                         button.removeClass();
-                        button.addClass('btn btn-success btn-sm');
+                        button.addClass('btn btn-success btn-sm pull-right');
                         button.text('Ajouté au panier !');
                         $('#myModalCart').modal();
                     }

@@ -43,7 +43,6 @@
                     </tr>
                 <?php  endforeach; ?>
             </table>
-            <?php if($data != array() )echo '<p style="text-align:center;">Pas de commande pour cette date ('.$_POST['date'].')</p>'; ?>
             <?php foreach($data as $k => $v): ?>
             <div class="modal fade" id="modal<?php echo $k; ?>" tabindex="-1" role="dialog" aria-labelledby="Commande <?php echo $k; ?>">
                 <div class="modal-dialog modal-lg">
