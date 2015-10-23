@@ -60,7 +60,7 @@ if (isset(parameters()["r"])) {
 		//TRANSFORME LE cli/login en T_E_CLIENT_CLI/login
 		list($route, $osef) = $route = explode("/", parameters()["r"]);
 
-		//recupere le vrai nombre de la table
+		//recupere le vrai nom de la table
 		$route = $tables[$route];
 		//remet le bon nom du controller
 

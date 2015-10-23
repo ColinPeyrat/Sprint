@@ -183,10 +183,32 @@ class T_E_CLIENT_CLIController extends Controller
         if(!isset($_SESSION['user'])){
             header("Refresh:0; url=../Sprint/?r=cli/login");
             $m = new message();
-            $m->setFlash('Vous devez etre connecté');
+            $m->setFlash('Vous devez etre connecté.');
         } else {
             $data = $_SESSION['cart'];
             $this->render("cart",$data);
+        }
+    }
+
+    public function fav(){
+        $m = new message();
+        if(!isset($_SESSION['user'])){
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté.');
+        } else {
+            $favByCli = T_E_CLIENT_CLI::findFavById($_SESSION['user']->cli_id);
+            if(!$favByCli){
+                $m->setFlash("Vous n'avez aucun jeu favori.","warning");
+                $this->render("fav");
+            }
+            else{
+                foreach($favByCli as $fav){
+                    $j = new T_E_JEUVIDEO_JEU($fav['jeu_id']);
+                    $data[] = $j;
+                }
+                $this->render("fav", $data);
+            }
         }
     }
 
@@ -197,7 +219,7 @@ class T_E_CLIENT_CLIController extends Controller
                 $game = new T_E_JEUVIDEO_JEU($id);
                 $gameAjax = false;
                 if($game->jeu_id == null){
-                    echo "Ce jeu n'existe pas";
+                    echo "Ce jeu n'existe pas !";
                 } else {
                     if(in_array($game,$_SESSION['cart'])) {
 
@@ -211,9 +233,36 @@ class T_E_CLIENT_CLIController extends Controller
         } else {
             header("Refresh:0; url=../Sprint/?r=cli/login");
             $m = new message();
-            $m->setFlash('Vous devez etre connecté');
+            $m->setFlash('Vous devez etre connecté.');
         }
     }
+
+    public function addToFav(){
+        if(isset($_SESSION['user'])) {
+            if (isset($_GET['jeu_id'])) {
+                $id = $_GET['jeu_id'];
+                $game = new T_E_JEUVIDEO_JEU($id);
+                $gameAjax = false;
+                if($game->jeu_id == null){
+                    echo "Ce jeu n'existe pas !";
+                } else {    
+                        if(T_E_CLIENT_CLI::addToFav($id)){        
+                            $gameAjax = true;
+                        }
+                    }
+                echo json_encode($gameAjax);
+            }
+        } else {
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté.');
+        }
+        return $gameAjax;
+    }
+
+
+
+
 
     public function register(){
         $m = new message();

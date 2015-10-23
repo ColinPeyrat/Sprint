@@ -78,8 +78,8 @@ T_E_CLIENT_CLI::displayCartModal();
                 <h4><?= $game->jeu_nom ?>
                 </h4>
                 <p><?php if($game->jeu_description != null){echo $game->jeu_description;} else {echo "<h5>Pas de description pour ce jeu</h5>";} ?></p>
+                <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-default btn addtofav pull-right">Ajouter aux favoris</button>
                 <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-primary btn addtocart pull-right">Ajouter au panier</button>
-
             </div>
         </div>
     </div>

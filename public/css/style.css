@@ -49,6 +49,7 @@ div.thumbnail img{
     margin-top: 10px;
 }
 div.thumbnail{  
+    height: 500px;
 }
 body {
     background-color: white;
