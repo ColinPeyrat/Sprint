@@ -13,13 +13,13 @@ function addMarker(){
                 var LatLng = new google.maps.LatLng(value.latitude, value.longitude);
                 var marker = new google.maps.Marker({
                 position: LatLng,
-                      animation: google.maps.Animation.DROP,
+                    animation: google.maps.Animation.DROP,
 
                 map: map,
-                title: 'Hello World!',
+                title: 'Point de relais',
                 });
                 var infowindow = new google.maps.InfoWindow({
-                  content: '<h5>'+value.nom+'</h5></br>'+value.addresse+'<br/>'+value.ville+'<br/>'+value.cp
+                  content: '<h5>'+value.nom+'</h5></br>'+value.addresse+'<br/>'+value.ville+'<br/>'+value.cp+'<br/><a href=?r=cli/myRelay&rel_id='+value.id+'>Choisir ce point de relais</a>'
                 });
                 marker.addListener('click', function() {
                   infowindow.open(map, marker);
@@ -28,16 +28,6 @@ function addMarker(){
     
 
         });
-        // $.each(json,function(i,o){
-        //     var text = o.nom;
-        //     var pos = {lat:parseFloat(o.latitude),lng:parseFloat(o.longitude)};
-        //      var marker = new google.maps.Marker({
-        //         position: latLng,
-        //         map: map,
-        //         title: data.title
-        //       });
-        //     marker.setMap(map);
-        // });
     });
   }
 
@@ -50,6 +40,14 @@ function addMarker(){
     };
     map = new google.maps.Map(document.getElementById("googleMap"),
         mapOptions);
+
+
+      google.maps.event.addListener(map, "rightclick", function(event) {
+          var lat = event.latLng.lat();
+          var lng = event.latLng.lng();
+          // populate yor box/field with lat, lng
+          alert("Lat=" + lat + "; Lng=" + lng);
+      });
   }
   $(document).ready(function() {
         var iconHome = {
@@ -78,12 +76,13 @@ function addMarker(){
             marker.addListener('click', function() {
               infowindow.open(map, marker);
             });
-
-          }     
+            addMarker();
+          },error:function(numero,erreur,message){
+                console.log(message);
+            }
         });
-        addMarker();
-    });
 
+    });
 
 // function initialize(responseArray)
 //     {
