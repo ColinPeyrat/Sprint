@@ -7,6 +7,15 @@
             <li role="presentation"><a href="./?r=cli">Mes informations</a></li>
             <li role="presentation"><a href="./?r=cli/adresse">Mes Adresses</a></li>
             <li role="presentation"><a href="./?r=cli/orders" >Mes commandes</a><li>
+            <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    Relais <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li role="presentation"><a href="./?r=cli/myRelay" >Mes relais</a><li>
+                    <li role="presentation"><a href="./?r=cli/relay" >Ajouter un relais</a><li>
+                </ul>
+            </li>
         </ul>
     </div>
     <div class="col-md-9">
@@ -34,7 +43,6 @@
                     </tr>
                 <?php  endforeach; ?>
             </table>
-            <?php if($data != array()) echo '<p style="text-align:center;">Pas de commande pour cette date ('.$_POST['date'].')</p>'; ?>
             <?php foreach($data as $k => $v): ?>
             <div class="modal fade" id="modal<?php echo $k; ?>" tabindex="-1" role="dialog" aria-labelledby="Commande <?php echo $k; ?>">
                 <div class="modal-dialog modal-lg">

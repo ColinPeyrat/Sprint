@@ -12,6 +12,31 @@ class T_E_CLIENT_CLIController extends Controller
             $this->render("relay",$_SESSION['user']->cli_id);
         }
     }
+    public function myRelay(){
+        if(!isset($_SESSION['user'])){
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté');
+        } else {
+//            $this->render("relay",$_SESSION['user']->cli_id);
+            if(isset($_GET['rel_id']) && !empty($_GET['rel_id'])){
+//                $this->render('myRelay',$_)
+                $idUser = $_SESSION['user']->cli_id;
+                $idRelay = $_GET['rel_id'];
+                $m = new message();
+                if(T_J_RELAISCLIENT_REC::checkIfRelayClientAlreadyExist($idUser,$idRelay)){
+                    $m->setFlash('Vous avez déja ajouté ce relais');
+                    header("Refresh:0; url=../Sprint/?r=cli/myRelay");
+                } else {
+                    T_J_RELAISCLIENT_REC::addRelayClient($_SESSION['user']->cli_id, $_GET['rel_id']);
+                    $m->setFlash('Votre relais à bien été ajouté','success');
+                    header("Refresh:0; url=../Sprint/?r=cli/myRelay");
+                }
+            } else {
+                $this->render('myRelay',T_J_RELAISCLIENT_REC::findByIdClient($_SESSION['user']->cli_id));
+            }
+        }
+    }
     public static function getFactureAdresse(){
         if(isset($_GET['cli_id'])){
             $idClient = $_GET['cli_id'];
@@ -32,7 +57,7 @@ class T_E_CLIENT_CLIController extends Controller
             $allRelay = T_E_RELAIS_REL::findAll();
             $relays = array();
             foreach ($allRelay as $key => $relay) {
-                $relays[] = array('latitude' => $relay->rel_latitude,'longitude' => $relay->rel_longitude, 'nom' => $relay->rel_nom,'addresse' => $relay->rel_rue,'ville' => $relay->rel_ville,'cp' => $relay->rel_cp );
+                $relays[] = array('latitude' => $relay->rel_latitude,'longitude' => $relay->rel_longitude, 'nom' => $relay->rel_nom,'addresse' => $relay->rel_rue,'ville' => $relay->rel_ville,'cp' => $relay->rel_cp,'id'=>$relay->rel_id );
             }
             echo json_encode($relays);
                 
@@ -158,10 +183,32 @@ class T_E_CLIENT_CLIController extends Controller
         if(!isset($_SESSION['user'])){
             header("Refresh:0; url=../Sprint/?r=cli/login");
             $m = new message();
-            $m->setFlash('Vous devez etre connecté');
+            $m->setFlash('Vous devez etre connecté.');
         } else {
             $data = $_SESSION['cart'];
             $this->render("cart",$data);
+        }
+    }
+
+    public function fav(){
+        $m = new message();
+        if(!isset($_SESSION['user'])){
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté.');
+        } else {
+            $favByCli = T_E_CLIENT_CLI::findFavById($_SESSION['user']->cli_id);
+            if(!$favByCli){
+                $m->setFlash("Vous n'avez aucun jeu favori.","warning");
+                $this->render("fav");
+            }
+            else{
+                foreach($favByCli as $fav){
+                    $j = new T_E_JEUVIDEO_JEU($fav['jeu_id']);
+                    $data[] = $j;
+                }
+                $this->render("fav", $data);
+            }
         }
     }
 
@@ -172,7 +219,7 @@ class T_E_CLIENT_CLIController extends Controller
                 $game = new T_E_JEUVIDEO_JEU($id);
                 $gameAjax = false;
                 if($game->jeu_id == null){
-                    echo "Ce jeu n'existe pas";
+                    echo "Ce jeu n'existe pas !";
                 } else {
                     if(in_array($game,$_SESSION['cart'])) {
 
@@ -186,9 +233,36 @@ class T_E_CLIENT_CLIController extends Controller
         } else {
             header("Refresh:0; url=../Sprint/?r=cli/login");
             $m = new message();
-            $m->setFlash('Vous devez etre connecté');
+            $m->setFlash('Vous devez etre connecté.');
         }
     }
+
+    public function addToFav(){
+        if(isset($_SESSION['user'])) {
+            if (isset($_GET['jeu_id'])) {
+                $id = $_GET['jeu_id'];
+                $game = new T_E_JEUVIDEO_JEU($id);
+                $gameAjax = false;
+                if($game->jeu_id == null){
+                    echo "Ce jeu n'existe pas !";
+                } else {    
+                        if(T_E_CLIENT_CLI::addToFav($id)){        
+                            $gameAjax = true;
+                        }
+                    }
+                echo json_encode($gameAjax);
+            }
+        } else {
+            header("Refresh:0; url=../Sprint/?r=cli/login");
+            $m = new message();
+            $m->setFlash('Vous devez etre connecté.');
+        }
+        return $gameAjax;
+    }
+
+
+
+
 
     public function register(){
         $m = new message();

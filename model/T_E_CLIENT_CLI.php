@@ -67,6 +67,8 @@ class T_E_CLIENT_CLI extends Model
             "telport" => $this->_cli_telportable,
             ));
     }
+
+
     public function userExistInDb()
     {
         $st = db()->prepare("select * from t_e_client_cli where cli_mel=:mel AND cli_motpasse=:password");
@@ -206,10 +208,11 @@ class T_E_CLIENT_CLI extends Model
         $c = new T_E_CLIENT_CLI($id_cli);
         return $c;
     }
+
     public static function displayCartModal(){
         ?>
         <!--Modal for ajax-->
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" id="myModalCart" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -219,7 +222,7 @@ class T_E_CLIENT_CLI extends Model
                     </div>
                     <div class="modal-body">
                         <p>
-                            Votre article a bien été ajouté au panier
+                            Votre article a bien été ajouté au panier.
                         </p>
                     </div>
                     <div class="modal-footer">
@@ -229,6 +232,30 @@ class T_E_CLIENT_CLI extends Model
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="myModalFav" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Produit ajouté</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Votre article a bien été ajouté aux favoris.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Continuer mes achats</button>
+                        <button type="button" id="gotofav" class="btn btn-default" data-dismiss="modal">Voir mes favoris</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="modal fade" id="errorModal" role="dialog">
             <div class="modal-dialog modal-sm">
                 <!-- Modal content-->
@@ -249,5 +276,49 @@ class T_E_CLIENT_CLI extends Model
             </div>
         </div>
 <?php
+    }
+
+
+    public static function addToFav($id_game){
+        $st = db()->prepare("SELECT * FROM t_j_favori_fav WHERE cli_id =:cli_id AND jeu_id =:jeu_id");
+        $st->bindValue(":cli_id", $_SESSION["user"]->cli_id);
+        $st->bindValue(":jeu_id", $id_game);
+        $st->execute();
+        if ($st->rowCount() == 0){
+            $req = db()->prepare("INSERT INTO t_j_favori_fav(cli_id, jeu_id) VALUES (:cli_id, :jeu_id)");
+            $req->execute(array(
+            "jeu_id" => $id_game,
+            "cli_id" => $_SESSION["user"]->cli_id
+            ));
+            return true;
+        }
+        else{ return false; }
+    }
+
+    public static function findFavById($cli_id){
+        $list = array();
+        $st = db()->prepare("SELECT * FROM t_j_favori_fav WHERE cli_id =:cli_id");
+        $st->bindValue(":cli_id", $cli_id);
+        $st->execute();
+        if ($st->rowCount() > 0){
+            foreach($st as $row){
+                $list[] = $row;
+            }
+        }
+        return $list;
+    }
+
+    public static function isFav($jeu_id){
+        if(isset($_SESSION["user"])){
+            $st = db()->prepare("SELECT * FROM t_j_favori_fav WHERE cli_id =:cli_id AND jeu_id =:jeu_id");
+            $st->bindValue(":cli_id", $_SESSION["user"]->cli_id);
+            $st->bindValue(":jeu_id", $jeu_id);
+            $st->execute();
+            if ($st->rowCount() == 1)
+                $retour = true;
+            else $retour = false;
+        }
+        else $retour = false;
+        return $retour;
     }
 }

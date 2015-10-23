@@ -49,6 +49,7 @@ div.thumbnail img{
     margin-top: 10px;
 }
 div.thumbnail{  
+    height: 500px;
 }
 body {
     background-color: white;
@@ -119,6 +120,11 @@ body {
 a.like, a.dislike{
     margin:4px;
 }
+
+.starfav{
+    color: #f1c40f;
+}
+
 
 /*STYLE OF CARROUSSEL
 --------------------------------------------*/
