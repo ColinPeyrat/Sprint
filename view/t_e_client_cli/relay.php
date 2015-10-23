@@ -24,7 +24,5 @@ echo "<p id='secret' class='hidden' data-user=".$data."></p>";
         	<div id="googleMap" style="width:600px;height:480px;"></div>
         </div>
     </div>
-
-    
 <script src="http://maps.googleapis.com/maps/api/js"></script>
 <script type="text/javascript" src="public/js/maps.js"></script>
