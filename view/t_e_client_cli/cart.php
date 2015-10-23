@@ -73,7 +73,7 @@ if(empty($data)){
         echo"<td></td>";
         echo"<td></td>";
         echo "<td><a href='?r=jeu' class='btn btn-default pull-right' role='button'><i class='glyphicon glyphicon-shopping-cart'></i>Continuer achats</a></td>";
-        echo "<td><button type='button' class='btn btn-success'>Valider <i class='glyphicon glyphicon-play'></i></button></td>";
+        echo "<td><a role='button' href='?r=cli/commandChoose' class='btn btn-success'>Passer commande <i class='glyphicon glyphicon-play'></i></a></td>";
         echo "<td></td>";
         echo "</tr>";
 //        echo "<tr>";

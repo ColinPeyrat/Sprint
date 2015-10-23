@@ -3,6 +3,22 @@
 
 class T_E_CLIENT_CLIController extends Controller
 {
+    public function commandChoose(){
+        $m = new message();
+        if(isset($_SESSION['user'])){
+            if(isset($_SESSION['cart'])){
+                if(empty($_SESSION['cart'])){ //SI le panier est vide
+                    $m = new message();
+                    $m->setFlash('Votre panier est vide');
+                    header("Refresh:0; url=../Sprint/?r=cli/cart");
+                } else { //Si il y a des articles dans le panier
+                    $allRelay = T_J_RELAISCLIENT_REC::findByIdClient($_SESSION['user']->cli_id);
+                    $allAdresses = T_E_ADRESSE_ADR::findByClient($_SESSION['user']->cli_id);
+                    $this->render('cartCommand',array($allRelay,$allAdresses));
+                }
+            }
+        }
+    }
      public function relay(){
         if(!isset($_SESSION['user'])){
             header("Refresh:0; url=../Sprint/?r=cli/login");
