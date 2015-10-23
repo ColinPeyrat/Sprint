@@ -21,6 +21,17 @@ class T_E_ADRESSE_ADR extends Model
         $st->execute();
     }
 
+    public static function adresseExist($cli_id,$adr_nom,$adr_type,$adr_rue,$adr_complementrue,$adr_cp,$adr_ville,$pay_id){
+        $adresse = new T_E_ADRESSE_ADR();
+        $data = $adresse::findByClient($cli_id);
+        foreach ($data as $v) {
+            if($v->adr_nom == $adr_nom && $v->adr_type == $adr_type && $v->adr_rue == $adr_rue && $v->adr_complementrue == $adr_complementrue && $v->adr_cp == $adr_cp && $v->adr_ville == $adr_ville && $v->T_R_PAYS_PAY->pay_id == $pay_id)
+               return true;
+        }
+        return false;
+
+    }
+
     public static function findByClient($id_client){
         $class = get_called_class();
         $list = array();
@@ -37,12 +48,11 @@ class T_E_ADRESSE_ADR extends Model
         $data = $adresse::findByClient($userid);
 
         foreach($data as $k=>$v){
-            $adr = new T_E_ADRESSE_ADR($v->adr_id);
-            if($v->adr_id != $idfacturation)
-                $adr->__set('adr_type','Livraison');
-            else
-                $adr->__set('adr_type','Facturation');
+            if($v->adr_id == $idfacturation){
+                $v->addAdresse($userid, $v->adr_nom, "Facturation", $v->adr_rue, $v->adr_complementrue, $v->adr_cp, $v->adr_ville, $v->T_R_PAYS_PAY->pay_id);
+            }     
         }
+        
     }
 
     public static function setLatLong($adr_id){
@@ -60,24 +70,39 @@ class T_E_ADRESSE_ADR extends Model
     public static function addAdresse($cli_id,$adr_nom,$adr_type,$adr_rue,$adr_complementrue,$adr_cp,$adr_ville,$pay_id){
         $m = new message();
         $adresse = new T_E_ADRESSE_ADR();
+
         if(!empty($adr_nom) && !empty($adr_type) && !empty($adr_rue) && !empty($adr_cp) && !empty($adr_ville) && !empty($pay_id)){
-            $st = db()->prepare("insert into t_e_adresse_adr(cli_id,adr_nom,adr_type,adr_rue,adr_complementrue,adr_cp,adr_ville,pay_id) values(".$cli_id.",'".$adr_nom."','".$adr_type."','".$adr_rue."','".$adr_complementrue."','".$adr_cp."','".$adr_ville."',".$pay_id.") returning adr_id");
-            $st->execute();
-            $m->setFlash("L'addresse à été ajouter","success");
+            if(!$adresse->adresseExist($cli_id,$adr_nom,$adr_type,$adr_rue,$adr_complementrue,$adr_cp,$adr_ville,$pay_id)){
+                $st = db()->prepare("insert into t_e_adresse_adr(cli_id,adr_nom,adr_type,adr_rue,adr_complementrue,adr_cp,adr_ville,pay_id) values(".$cli_id.",'".$adr_nom."','".$adr_type."','".pg_escape_string($adr_rue)."','".$adr_complementrue."','".$adr_cp."','".$adr_ville."',".$pay_id.") returning adr_id");
+                $st->execute();
+                $m->setFlash("L'adresse a été ajoutée","success");
 
-            $adr_id = $st->fetch();
-            if($adr_type == 'Facturation'){
-                $adresse->putFacturation($cli_id,$adr_id['adr_id']);
+                $adr_id = $st->fetch();
+
+                if($adr_type == 'Facturation'){
+                    $data = $adresse::findByClient($cli_id);
+                    foreach($data as $k=>$v){
+                        $adr = new T_E_ADRESSE_ADR($v->adr_id);
+                        if($v->adr_type == 'Facturation' && $v->adr_id != $adr_id['adr_id']){
+                            if(!$v->adresseExist($cli_id, $v->adr_nom, "Livraison", $v->adr_rue, $v->adr_complementrue, $v->adr_cp, $v->adr_ville, $v->T_R_PAYS_PAY->pay_id))
+                                $adr->__set('adr_type', 'Livraison');
+                            else
+                                $adr->removeAdresse($v->adr_id);
+                        }
+                    }
+                }
+                   
+
+                $adresse->setLatLong($adr_id['adr_id']);     
+
+                unset($_POST['InputNom']);
+                unset($_POST['InputType']);
+                unset($_POST['InputRue']);
+                unset($_POST['InputComplementRue']);
+                unset($_POST['InputCP']);
+                unset($_POST['InputVille']);
+                unset($_POST['InputPays']);
             }
-            $adresse->setLatLong($adr_id['adr_id']);
-
-            unset($_POST['InputNom']);
-            unset($_POST['InputType']);
-            unset($_POST['InputRue']);
-            unset($_POST['InputComplementRue']);
-            unset($_POST['InputCP']);
-            unset($_POST['InputVille']);
-            unset($_POST['InputPays']);
         }
         else{
             $m->setFlash("Tous les champs doivent être remplis");
