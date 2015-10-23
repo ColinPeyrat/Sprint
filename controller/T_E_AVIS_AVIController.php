@@ -16,6 +16,20 @@ class T_E_AVIS_AVIController extends Controller
 	    }
 	}
 
+    public function orderAvis(){
+        $id_game = $_POST['idGame'];
+        $data = T_E_AVIS_AVI::findByGame($id_game);
+
+        usort($data, function($a, $b)
+        {
+            if($_POST['type'] == 'asc')
+                return strcmp($a->avi_note, $b->avi_note);
+            else
+                return strcmp($b->avi_note, $a->avi_note);
+        });
+
+        $this->render("displayByGame", $data);
+    }
 
 	public function add(){
         $m = new message();
