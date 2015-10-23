@@ -53,4 +53,12 @@ class T_J_RELAISCLIENT_REC extends Model
                 $st->execute();
         }
     }
+    public static function removeRelayClient($idClient,$idRelay){
+        if(isset($idClient) && isset($idRelay) && !empty($idClient)&& !empty($idRelay)) {
+            $st = db()->prepare("DELETE FROM T_J_RELAISCLIENT_REC WHERE cli_id=:cli AND rel_id=:rel");
+            $st->bindParam(':cli', $idClient);
+            $st->bindParam(':rel', $idRelay);
+            $st->execute();
+        }
+    }
 }

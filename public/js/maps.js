@@ -19,7 +19,7 @@ function addMarker(){
                 title: 'Point de relais',
                 });
                 var infowindow = new google.maps.InfoWindow({
-                  content: '<h5>'+value.nom+'</h5></br>'+value.addresse+'<br/>'+value.ville+'<br/>'+value.cp+'<br/><a href=?r=cli/myRelay&rel_id='+value.id+'>Choisir ce point de relais</a>'
+                  content: '<h5>'+value.nom+'</h5></br>'+value.addresse+'<br/>'+value.ville+'<br/>'+value.cp+'<br/><a class="btn btn-default" role="button" href=?r=cli/myRelay&rel_id='+value.id+'>Choisir ce point de relais</a>'
                 });
                 marker.addListener('click', function() {
                   infowindow.open(map, marker);
