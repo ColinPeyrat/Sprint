@@ -1,4 +1,4 @@
-<?php var_dump($data);
+<?php
 $cli_id = $data;
 echo "<p id='secret' class='hidden' data-user=".$data."></p>";
 ?>
