@@ -307,4 +307,18 @@ class T_E_CLIENT_CLI extends Model
         }
         return $list;
     }
+
+    public static function isFav($jeu_id){
+        if(isset($_SESSION["user"])){
+            $st = db()->prepare("SELECT * FROM t_j_favori_fav WHERE cli_id =:cli_id AND jeu_id =:jeu_id");
+            $st->bindValue(":cli_id", $_SESSION["user"]->cli_id);
+            $st->bindValue(":jeu_id", $jeu_id);
+            $st->execute();
+            if ($st->rowCount() == 1)
+                $retour = true;
+            else $retour = false;
+        }
+        else $retour = false;
+        return $retour;
+    }
 }

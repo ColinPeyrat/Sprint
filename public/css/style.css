@@ -121,6 +121,11 @@ a.like, a.dislike{
     margin:4px;
 }
 
+.starfav{
+    color: #f1c40f;
+}
+
+
 /*STYLE OF CARROUSSEL
 --------------------------------------------*/
 div.carousel{

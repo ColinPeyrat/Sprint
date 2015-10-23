@@ -77,9 +77,10 @@ T_E_CLIENT_CLI::displayCartModal();
                 <h4 class="pull-right"><?= $game->jeu_prixttc ?> €</h4>
                 <h4><?= $game->jeu_nom ?>
                 </h4>
-                <p><?php if($game->jeu_description != null){echo $game->jeu_description;} else {echo "<h5>Pas de description pour ce jeu</h5>";} ?></p>
-                <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-default btn addtofav pull-right">Ajouter aux favoris</button>
-                <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-primary btn addtocart pull-right">Ajouter au panier</button>
+                <p style="text-align:justify;"><?php if($game->jeu_description != null){echo $game->jeu_description;} else {echo "<h5>Pas de description pour ce jeu</h5>";} ?></p>
+
+                <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-primary addtocart pull-right">Ajouter au panier</button>
+                <button type="button" value="<?= $game->jeu_id ?>" class="btn btn-default addtofav"><?php if(T_E_CLIENT_CLI::isFav($game->jeu_id) == true) {echo "<span class='glyphicon glyphicon-star starfav'></span> Favori";} else {echo "<span class='glyphicon glyphicon-star'></span> Ajouter aux favoris"; }?></button>
             </div>
         </div>
     </div>
