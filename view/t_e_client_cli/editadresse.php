@@ -5,6 +5,7 @@
             <li role="presentation"><a href="./?r=cli">Mes informations</a></li>
             <li role="presentation"><a href="./?r=cli/adresse">Mes Adresses</a></li>
             <li role="presentation"><a href="./?r=cli/orders" >Mes commandes</a><li>
+            <li role="presentation"><a href="./?r=cli/fav" >Mes favoris</a><li>
         </ul>
     </div>
     <div class="col-md-9">

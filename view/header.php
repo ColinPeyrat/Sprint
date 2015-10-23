@@ -54,6 +54,7 @@
                                 echo $_SESSION['user']->cli_prenom." ".$_SESSION['user']->cli_nom." <span class='caret'></span></a>";
                                 echo '<ul class="dropdown-menu">';
                                 echo '<li><a href="?r=cli/cart"><i class="glyphicon glyphicon-shopping-cart"></i> Mon panier</a></li>';
+                                echo '<li><a href="./?r=cli/fav"><i class="glyphicon glyphicon-star"></i> Mes favoris</a><li>';
                                 echo '<li role="separator" class="divider"></li>';
                                 echo '<li><a href="?r=cli"><i class="glyphicon glyphicon-user"></i> Mon compte</a></li>';
                                 echo '<li role="separator" class="divider"></li>';
