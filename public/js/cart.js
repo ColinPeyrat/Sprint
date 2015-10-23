@@ -43,8 +43,9 @@ $(document).ready(function(){
                         $('#errorModal').modal();
                     } else {
                         button.removeClass();
-                        button.addClass('btn btn-success btn-sm');
-                        button.text('Ajouté au favoris !');
+                        button.addClass('btn btn-default');
+                        button.empty();
+                        button.append("<span class='glyphicon glyphicon-star starfav'></span>");
                         $('#myModalFav').modal();
                     }
             },

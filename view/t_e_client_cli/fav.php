@@ -1,4 +1,13 @@
 <h2> Vos jeux favoris</h2>
+<div class="row">
+	<div class="col-md-3">
+        <ul class="nav nav-pills nav-stacked">
+            <li role="presentation"><a href="./?r=cli">Mes informations</a></li>
+            <li role="presentation"><a href="./?r=cli/adresse">Mes Adresses</a></li>
+            <li role="presentation"><a href="./?r=cli/orders" >Mes commandes</a><li>
+        </ul>
+    </div>
+    <div class="col-md-9">
 <?php
 if(isset($data)){
 	foreach($data as $jeu){
@@ -15,6 +24,14 @@ if(isset($data)){
 
 	                        echo '</div>';
 	                        echo '<div class="ratings">';
+	                        	echo "<a href='?r=cli/delfav&id_game=".$jeu->jeu_id."' type='button' value='".$jeu->jeu_id."' class='btn btn-default'>"; 
+	                        		if(T_E_CLIENT_CLI::isFav($jeu->jeu_id) == true){
+	                        			echo "<span class='glyphicon glyphicon-star starfav'></span>";
+	                        		} 
+	                        		else {
+	                        			echo "<span class='glyphicon glyphicon-star'></span>";
+	                        		}
+	                        		echo "</a>";
 								echo '<button type="button" value="'.$jeu->jeu_id.'" class="btn btn-primary btn-sm addtocart">Ajouter au panier</button>';
 								echo "<p class='pull-right'><a href='?r=avi/findByGame&id_game=".$jeu->jeu_id."'> Avis </a><</p>";
 	                            echo '<p><h4>'.$jeu->jeu_prixttc.'€</h4><p>';
@@ -23,3 +40,5 @@ if(isset($data)){
 	                echo '</div>';
 	}
 }
+	echo "</div>";
+echo "</div>";

@@ -276,6 +276,14 @@ class T_E_CLIENT_CLIController extends Controller
         return $gameAjax;
     }
 
+    public function delfav(){
+        if(isset($_SESSION["user"]) && isset($_GET["id_game"])){
+            T_E_CLIENT_CLI::delfav($_GET["id_game"]);
+            header("Refresh:0; url=../Sprint/?r=cli/fav");
+        }
+
+    }
+
 
 
 
