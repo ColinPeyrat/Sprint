@@ -4,6 +4,7 @@ $relay = $data[0];
 $adresse = $data[1];
 var_dump($relay);
 var_dump($adresse);
+
 ?>
 <h1>Valider votre panier</h1>
 <a role='button' href='?r=cli/adresse' class='btn btn-info'>Modifier ses adresse</a>
